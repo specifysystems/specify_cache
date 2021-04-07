@@ -1,9 +1,24 @@
 # Use Cases
 
 ## Data Cleaning
-1. Users upload occurrence data for cleaning using a number of filters / modifiers / wranglers to produce a dataset suitable for modeling
+* Users upload occurrence data for cleaning using a number of filters / modifiers / wranglers to produce a dataset suitable for modeling
 
 ## Specify Export Storage
+* Specify collections upload some or all of their collection holdings as Darwin Core Archives
+* Specify collections delete records from their holdings (Specify may have trouble doing this)
+* Specify collections update their metadata
+* Aggregators consume Specify archives?
+* We provide aggregator services on Specify data?
+  * Query
+  * Download
+  * Standardization
+* General public can get an individual record (GUID may resolve to our URL)
+
+## Resolver Interaction
+ * If GUID is not resolvable yet, add entry pointing at our cache
+ * If GUID is present, add to ID mapper?
+ * If they have direct access to data for GUID, can we add / update resolver with that info?  Where does it come from?  Collection metadata?  Does it update when collection metadata is updated?
+
 ## Syfting
 
 ### Syft-ed Data Retrieval
