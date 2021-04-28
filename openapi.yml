@@ -1,0 +1,331 @@
+openapi: 3.0.3
+info:
+  title: Syftorium API
+  version: 1.0.0.beta
+  description: API Specification for Syftorium Server Interactions
+  contact:
+    email: cjgrady@ku.edu
+    name: CJ Grady
+  license:
+    name: GPL 3
+    url: 'https://www.gnu.org/licenses/gpl-3.0.txt'
+servers:
+  - url: 'https://syftorium.org/api/v1/'
+    description: Base URL for Syftorium services
+paths:
+#  /data_cleaning:
+#    summary: Endpoint for data cleaning services
+#  /data_cleaning/occurrences:
+#    summary: Endpoint for cleaning occurrences
+#    post:
+#      summary: POST occurrence data for cleaning
+#      description: POST a new occurrence dataset for cleaning
+#      operationId: data_cleaning.occurrences.post
+#      responses:
+#        default:
+#          description: Default response
+#      tags:
+#        - data_cleaning
+#  '/data_cleaning/occurrences/{dataset_id}':
+#    summary: Endpoint for an occurrence dataset
+#    delete:
+#      summary: DELETE a cleaned occurrence dataset
+#      operationId: data_cleaning.occurrences.dataset.delete
+#      responses:
+#        default:
+#          description: Default response
+#      tags:
+#        - data_cleaning
+#    get:
+#      summary: GET the cleaned occurrence dataset
+#      operationId: data_cleaning.occurrences.dataset.get
+#      responses:
+#        default:
+#          description: Default response
+#      tags:
+#        - data_cleaning
+#    parameters:
+#      - name: dataset_id
+#        in: path
+#        required: true
+#        schema:
+#          type: string
+  /sp_cache:
+    summary: Endpoint for Specify collection caches
+    get:
+      summary: Get status information about our Specify cache collection holdings
+      operationId: sp_cache.get
+      responses:
+        200:
+          description: An overall status of the Specify Cache
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/server_status'
+      tags:
+        - status
+  /sp_cache/collection:
+    summary: Endpoint for all Specify cache collections
+    post:
+      summary: Add a new collection
+      description: POST a new collection to the Specify cache
+      operationId: sp_cache.colection.post
+      requestBody:
+        $ref: '#/components/requestBodies/new_collection'
+
+      responses:
+        200:
+          description: A brief summary of the collection in the cache
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/collection_status'
+              examples:
+                example_new_collection:
+                  $ref: '#/components/examples/example_new_collection'
+      tags:
+        - collection
+  '/sp_cache/collection/{collection_id}':
+    summary: Endpoint for a specific Specify collection
+    parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get collection information
+      description: ''
+      operationId: sp_cache.collection.collection_id.get
+      responses:
+        '200':
+          description: Collection status
+          content:
+            application/json:
+              examples:
+                simple_collection_status:
+                  $ref: '#/components/examples/simple_collection_status'
+              schema:
+                $ref: '#/components/schemas/collection_status'
+        default:
+          description: Default error sample response
+      tags:
+        - collection
+        - status
+    put:
+      summary: Add or update collection information for a specific collection id
+      description: ''
+      operationId: sp_cache.collection.collection_id.put
+      responses:
+        204:
+          description: Collection information updated successfully
+        403:
+          description: Not authorized to update colleciton information
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - collection
+  '/sp_cache/collection/{collection_id}/occurrences':
+    summary: Endpoint for collection occurrences
+    parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+    delete:
+      summary: Delete occurrence records from the collection's cache
+      description: ''
+      operationId: sp_cache.collection.collection_id.occurrences.delete
+      responses:
+        204:
+          description: Deleted the occurrence record, no content to response
+        403:
+          description: Not authorized to delete this occurrence record
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - occurrences
+    post:
+      summary: Add new occurrence records to the collection's cache
+      description: ''
+      operationId: sp_cache.collection.collection_id.occurrences.post
+      requestBody:
+        $ref: '#/components/requestBodies/cache_data_post'
+      responses:
+        202:
+          description: Successfully accepted data for inclusion in the cache
+        403:
+          description: Not authorized to post data for this collection
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - occurrences
+    put:
+      summary: Update occurrence records to the collection's cache
+      description: ''
+      operationId: sp_cache.collection.collection_id.occurrences.put
+      requestBody:
+        $ref: '#/components/requestBodies/cache_data_post'
+      responses:
+        202:
+          description: Successfully accepted data for inclusion in the cache
+        403:
+          description: Not authorized to post data for this collection
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - occurrences
+  '/sp_cache/collection/{collection_id}/occurrences/{identifier}':
+    summary: Endpoint for specific specimen occurrences
+    delete:
+      summary: DELETE an occurrence record from a collection's cache
+      operationId: sp_cache.collection.collection_id.occurrences.identifier.delete
+      responses:
+        204:
+          description: Successfully deleted the record
+        403:
+          description: Not authorized to delete the record
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - specimen
+    get:
+      summary: GET an occurrence record from a collection's cache
+      operationId: sp_cache.collection.collection_id.occurrences.identifier.get
+      responses:
+        200:
+          description: A JSON representation of the occurrence record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/occurrence'
+      tags:
+        - specimen
+    put:
+      summary: PUT an occurrence record from a collection's cache
+      operationId: sp_cache.collection.collection_id.occurrences.identifier.put
+      requestBody:
+        $ref: '#/components/requestBodies/update_cache_occurrence_record'
+      responses:
+        204:
+          description: Successfully updated the record
+        403:
+          description: Not authorized to delete the record
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - specimen
+    parameters:
+      - name: collection_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+#  /syftorium:
+#    summary: Endpoint for Syftorium services
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+  examples:
+    example_new_collection:
+      value: |-
+        {
+          "collection_name": "Example collection"
+        }
+    simple_collection_status:
+      value: |-
+        {
+          "collection_id": "abcd-efgh-ijklm",
+          "record_count": 23423
+        }
+  requestBodies:
+    cache_data_post:
+      description: A set of occurrence records to add to the cache
+      content:
+        application/zip:
+          schema:
+            type: string
+            format: binary
+    new_collection:
+      description: Information about a new collection to add to the cache
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/new_collection_post'
+          examples:
+            example_new_collection:
+              $ref: '#/components/examples/example_new_collection'
+      required: true
+    update_cache_occurrence_record:
+      description: Updated data that should replace existing cached occurrence record
+      content:
+        application/json:
+          schema:
+            type: object
+
+  schemas:
+    collection_status:
+      description: A brief summary of the collection in the cache
+      properties:
+        collection_name:
+          type: string
+        institution_name:
+          type: string
+        collection_id:
+          type: string
+        record_count:
+          type: integer
+        last_updated:
+          type: string
+          format: date-time
+        collection_location:
+          $ref: '#/components/schemas/locality'
+        contact:
+          $ref: '#/components/schemas/contact'
+    contact:
+      type: object
+    locality:
+      type: object
+    new_collection_post:
+      description: Schema for a new collection POST request
+      properties:
+        collection_name:
+          type: string
+        institution_name:
+          type: string
+        collection_id:
+          type: string
+        record_count:
+          type: integer
+        last_updated:
+          type: string
+          format: date-time
+        collection_location:
+          $ref: '#/components/schemas/locality'
+        contact:
+          $ref: '#/components/schemas/contact'
+        public_key:
+          type: string
+    occurrence:
+      type: object
+    server_status:
+      type: object
+      properties:
+        num_collections:
+          description: Number of collections in the cache
+          type: integer
+        num_records:
+          description: Number of records in the cache
+          type: integer
+        status:
+          description: A brief status of the cache / server
+          type: string
