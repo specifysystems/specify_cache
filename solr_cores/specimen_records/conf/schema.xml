@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="specimen_records" version="1.5">
+	<field name="_version_" type="long" indexed="true" stored="true" />
+	
+    <field name="identifier" type="string" indexed="true" stored="true" />
+	<field name="collection_id" type="string" indexed="true" stored="true" />
+
+    <field name="dwc:accessRights" type="string" indexed="true" stored="true" />
+    <field name="dwc:basisOfRecord" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:catalogNumber" type="string" indexed="true" stored="true" />
+    <field name="dwc:collectionCode" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:continent" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:country" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:county" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:datasetName" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:decimallatitude" type="float" indexed="true" stored="true" /> 
+    <field name="dwc:decimallongitude" type="float" indexed="true" stored="true" /> 
+    <field name="dwc:eventDate" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:geodeticDatum" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:institutionCode" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:institutionID" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:kingdom" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:locality" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:occurrenceID" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:preparations" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:rights" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:stateprovince" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:class" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:family" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:genus" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:order" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:phylum" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:scientificName" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:scientificNameAuthorship" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:specificepithet" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:modified" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:globaluniqueidentifier" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:preparations" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:recordedBy" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:license" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:datasetname" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:fieldnumber" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:highergeography" type="string" indexed="true" stored="true" /> 
+    <field name="dwc:waterbody" type="string" indexed="true" stored="true" /> 
+
+    <uniqueKey>identifier</uniqueKey>
+
+    <!-- Field types -->
+	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
+	<fieldType name="float" class="solr.FloatPointField" />
+</schema>
