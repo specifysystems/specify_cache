@@ -17,7 +17,7 @@ class Collection:
 
 class SpecimenRecord:
     """Class containing specimen record information."""
-	def __init__(self, attribute_dict):
+    def __init__(self, attribute_dict):
         """Construct a SpecimenRecord.
 
         Args:

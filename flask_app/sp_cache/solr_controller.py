@@ -1,7 +1,7 @@
 """Solr backend controller module for Specify Cache."""
 import csv
 
-from models import Collection, SpecimenRecord
+from .models import Collection, SpecimenRecord
 
 # Need an easy way to get solr classes
 # Try using results_cls parameter to get and post proper results
