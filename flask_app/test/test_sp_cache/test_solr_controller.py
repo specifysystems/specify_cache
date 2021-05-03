@@ -16,6 +16,13 @@ def test_get_specimen_solr():
 # .....................................................................................
 def test_post_get_delete_collection():
     collection_data = {
+        'collection_id': 'test_collection',
+        'institution_name': 'test institution',
+        'last_updated': '2021-05-03',
+        'public_key': 'specify_pub_key',
+        'collection_location': 'Specify HQ',
+        'contact_name': 'Test User',
+        'contact_email': 'test@sfytorium.org',
     }
     app_solr.post_collection(collection_data)
     ret_col = app_solr.get_collection(collection_id)
