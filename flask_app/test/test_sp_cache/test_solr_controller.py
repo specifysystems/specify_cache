@@ -1,5 +1,5 @@
 """Test Solr functions."""
-import flask_app.sp_cache.solr_controller as app_solr
+import sp_cache.solr_controller as app_solr
 
 # .....................................................................................
 def test_get_collection_solr():
@@ -15,10 +15,11 @@ def test_get_specimen_solr():
 
 # .....................................................................................
 def test_post_get_delete_collection():
+    collection_id = 'test_collection'
     collection_data = {
-        'collection_id': 'test_collection',
+        'collection_id': collection_id,
         'institution_name': 'test institution',
-        'last_updated': '2021-05-03',
+        'last_updated': '2021-05-03T11:06:00Z',
         'public_key': 'specify_pub_key',
         'collection_location': 'Specify HQ',
         'contact_name': 'Test User',

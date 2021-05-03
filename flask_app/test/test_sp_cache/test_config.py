@@ -1,7 +1,7 @@
 """Test our Solr config for sp_cache."""
 import pysolr
 
-from flask_app.sp_cache.config import COLLECTIONS_URL, SPECIMENS_URL
+from sp_cache.config import COLLECTIONS_URL, SPECIMENS_URL
 
 # .....................................................................................
 def test_connect_to_collections_core():

@@ -38,7 +38,7 @@ def post_collection(collection):
 # .....................................................................................
 def get_collection(collection_id):
     collection_solr = get_collection_solr()
-    return collection_solr.search('q=collection_id:{}'.format(collection_id))
+    return collection_solr.search(collection_id)
 
 
 # .....................................................................................
