@@ -18,4 +18,5 @@
 	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
 	<fieldType name="float" class="solr.FloatPointField" />
 	<fieldType name="date" class="solr.DatePointField" />
+	<fieldType name="long" class="solr.LongPointField" />
 </schema>
