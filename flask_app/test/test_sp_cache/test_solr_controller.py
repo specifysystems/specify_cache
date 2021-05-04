@@ -95,3 +95,13 @@ def test_post_get_delete_collection():
 #        if len(specimens_to_post) > 0:
 #            sp_solr.add([rec.serialize_json() for rec in specimens_to_post])
     
+def test_post_get_delete_specimen():
+    """Test various specimen operations."""
+    collection_id = 'test_collection'
+    known_identifier = 'bae4b1f5-df83-4183-8b6e-005abc5d97ad'
+    test_filename = '../../test_data/dwc_update.zip'
+    with open(test_filename, mode='rb') as in_file:
+        solr_app.process_occurrence_dca(collection_id, in_file, meta_filename)
+    rec = solr_app.get_specimen(collection_id, known_identifier)
+    solr_app.delete_collection_occurrences(collection_id, [known_identifier])
+ 
