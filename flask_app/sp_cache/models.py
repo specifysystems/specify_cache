@@ -1,7 +1,10 @@
 """Models for Specify Cache."""
 
+
+# .....................................................................................
 class Collection:
     """Class containing collection information."""
+    # ............................
     def __init__(self, attribute_dict):
         """Construct a Collection object.
 
@@ -10,13 +13,16 @@ class Collection:
         """
         self.attributes = attribute_dict
 
-    def validate():
+    # ............................
+    def validate(self):
         """Validate the Collection to make sure the required elements are present."""
         pass
 
 
+# .....................................................................................
 class SpecimenRecord:
     """Class containing specimen record information."""
+    # ............................
     def __init__(self, attribute_dict):
         """Construct a SpecimenRecord.
 
@@ -26,3 +32,12 @@ class SpecimenRecord:
                 namespace with their values.
         """
         self.attributes = attribute_dict
+
+    # ............................
+    def serialize_json(self):
+        """Serialize the object for JSON responses.
+
+        Returns:
+            dict: A JSON-serializable dictionary.
+        """
+        return self.attributes

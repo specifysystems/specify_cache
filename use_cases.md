@@ -44,4 +44,3 @@
 
 * Users upload collection data to update their collection holdings and get new syft statistics
 * Users check where a point would fall among similar occurrences (uniqueness / correctness / representation / etc)
-

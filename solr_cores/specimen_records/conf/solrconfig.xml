@@ -18,12 +18,12 @@
             <str name="dir">${solr.ulog.dir:}</str>
             <int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>
         </updateLog>
-        <autoCommit> 
-            <maxTime>${solr.autoCommit.maxTime:15000}</maxTime> 
-            <openSearcher>false</openSearcher> 
+        <autoCommit>
+            <maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
+            <openSearcher>false</openSearcher>
         </autoCommit>
-        <autoSoftCommit> 
-            <maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime> 
+        <autoSoftCommit>
+            <maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
         </autoSoftCommit>
     </updateHandler>
     <query>
@@ -58,7 +58,7 @@
     </query>
     <requestDispatcher handleSelect="false">
         <requestParsers
-		    enableRemoteStreaming="true" 
+		    enableRemoteStreaming="true"
             multipartUploadLimitInKB="2048000"
             formdataUploadLimitInKB="2048"
             addHttpRequestToContext="false" />
@@ -94,16 +94,16 @@
         </lst>
     </initParams>
     <requestHandler
-	    name="/analysis/field" 
+	    name="/analysis/field"
         startup="lazy"
         class="solr.FieldAnalysisRequestHandler" />
     <requestHandler
-	    name="/analysis/document" 
-        class="solr.DocumentAnalysisRequestHandler" 
+	    name="/analysis/document"
+        class="solr.DocumentAnalysisRequestHandler"
         startup="lazy" />
     <requestHandler name="/debug/dump" class="solr.DumpRequestHandler" >
         <lst name="defaults">
-            <str name="echoParams">explicit</str> 
+            <str name="echoParams">explicit</str>
             <str name="echoHandler">true</str>
         </lst>
     </requestHandler>
@@ -112,7 +112,7 @@
         <lst name="defaults">
             <bool name="terms">true</bool>
             <bool name="distrib">false</bool>
-        </lst>     
+        </lst>
         <arr name="components">
             <str>terms</str>
         </arr>

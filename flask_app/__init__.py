@@ -1,4 +1,4 @@
-"""Top level __init__.py"""
+"""Root Flask application for Syftorium."""
 import os
 
 from flask import Flask
@@ -6,6 +6,14 @@ from flask import Flask
 
 # .....................................................................................
 def create_app(test_config=None):
+    """Create a Flask application.
+
+    Args:
+        test_config (dict): Testing configuration parameters.
+
+    Returns:
+        Flask: Flask application.
+    """
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -25,11 +33,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
     from . import sp_cache
     app.register_blueprint(sp_cache.bp)

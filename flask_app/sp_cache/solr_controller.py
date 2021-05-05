@@ -1,9 +1,8 @@
 """Solr backend controller module for Specify Cache."""
-import csv
 import pysolr
 
 from .config import COLLECTIONS_URL, SPECIMENS_URL
-from .models import Collection, SpecimenRecord
+from .models import SpecimenRecord
 
 
 # Need an easy way to get solr classes
@@ -12,6 +11,9 @@ from .models import Collection, SpecimenRecord
 # .....................................................................................
 def get_collection_solr():
     """Get solr connection to collections core.
+
+    Returns:
+        pysolr.Solr: A Solr connection to the collections Solr collection.
 
     Todo:
         Incorporate this into flask better.
@@ -23,6 +25,9 @@ def get_collection_solr():
 def get_specimen_solr():
     """Get solr connection to specimens core.
 
+    Returns:
+        pysolr.Solr: A Solr connection to the specimens Solr collection.
+
     Todo:
         Incorporate this into flask better.
     """
@@ -31,41 +36,78 @@ def get_specimen_solr():
 
 # .....................................................................................
 def post_collection(collection):
+    """Post a new collection.
+
+    Args:
+        collection (Collection): A Collection object to add to the solr index.
+    """
     collection_solr = get_collection_solr()
     collection_solr.add(collection)
 
 
 # .....................................................................................
 def get_collection(collection_id):
+    """Get a collection from Solr.
+
+    Args:
+        collection_id (str): The identifier for the collection to retrieve.
+
+    Returns:
+        Collection: Collection information from the Solr index.
+    """
     collection_solr = get_collection_solr()
     return collection_solr.search(collection_id)
 
 
 # .....................................................................................
 def update_collection(collection):
+    """Update a collection in the solr index.
+
+    Args:
+        collection (dict): Updated collection information that replaces old.
+    """
     collection_solr = get_collection_solr()
     collection_solr.update(collection)
 
 
 # .....................................................................................
 def get_summary():
+    """Get server summary information."""
     pass
 
 
 # .....................................................................................
 def delete_collection(collection_id):
+    """Delete a collection from the index.
+
+    Args:
+        collection_id (str): The identifer for the collection to remove.
+    """
     collection_solr = get_collection_solr()
     collection_solr.delete('q=collection_id:{}'.format(collection_id))
 
 
 # .....................................................................................
 def update_collection_occurrences(collection_id, specimens):
+    """Update collection occurrences.
+
+    Args:
+        collection_id (str): The identifer for the collection containing these
+            specimens.
+        specimens (list of dict): Specimen records to add or replace in the index.
+    """
     sp_solr = get_specimen_solr()
     sp_solr.add(specimens)
 
 
 # .....................................................................................
 def delete_collection_occurrences(collection_id, identifiers):
+    """Delete specimens from the index.
+
+    Args:
+        collection_id (str): The identifier for the collection holding these records.
+        identifiers (list of str): Identifiers for records to remove from the index.
+    """
     sp_solr = get_specimen_solr()
     sp_solr.delete(
         'q=collection_id:{},identifier={}'.format(collection_id, ','.join(identifiers))
@@ -74,35 +116,17 @@ def delete_collection_occurrences(collection_id, identifiers):
 
 # .....................................................................................
 def get_specimen(collection_id, identifier):
+    """Get a specimen from the index.
+
+    Args:
+        collection_id (str): The identifier for the collection holding this specimen.
+        identifier (str): The identifier for the record to retrieve.
+
+    Returns:
+        SpecimenRecord: The specimen record from the index.
+    """
     sp_solr = get_specimen_solr()
     rec = sp_solr.search(
         'q=collection_id:{},identiifer:{}'.format(collection_id, identifier)
     )
     return SpecimenRecord(rec)
-
-
-# .....................................................................................
-def process_occurrence_dca(collection_id, dca_file, meta_filename, data_filename):
-    """Process a Specify export."""
-    sp_solr = get_specimen_solr()
-    # Open zip file if necessary
-
-    # Metadata
-    meta_file = dca_file.extract(meta_filename)
-    translate_dict = {}
-    # Open data file
-    specimens_to_post = []
-    with open(data_filename) as data_file:
-        # Open csv reader
-        reader = csv.reader(data_file, headers=True)
-        for row in reader:
-            # Create object for each record
-            specimens_to_post.append(SpecimenRecord.from_row(translate_dict, row))
-            # If we reach a limit, post and reset
-            if len(specimens_to_post) >= POST_SIZE_LIMIT:
-                sp_solr.add([rec.serialize_json() for rec in specimens_to_post])
-                specimens_to_post = []
-        # Add any leftover to solr
-        if len(specimens_to_post) > 0:
-            sp_solr.add([rec.serialize_json() for rec in specimens_to_post])
-    
