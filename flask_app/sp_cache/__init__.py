@@ -12,7 +12,7 @@ bp = Blueprint('sp_cache', __name__, url_prefix='/sp_cache')
 
 
 # .....................................................................................
-@bp.route('/', methods=('GET'))
+@bp.route('/', methods=['GET'])
 def sp_cache_status():
     """Get overall health of the cache."""
     num_collections = 0
@@ -26,7 +26,7 @@ def sp_cache_status():
 
 
 # .....................................................................................
-@bp.route('/collection', methods=('POST'))
+@bp.route('/collection', methods=['POST'])
 def sp_cache_collection_post():
     collection = Collection(request.json)
     controller.post_collection(collection)
@@ -34,7 +34,7 @@ def sp_cache_collection_post():
 
 
 # .....................................................................................
-@bp.route('/collection/<string:collection_id>', methods=('GET'))
+@bp.route('/collection/<string:collection_id>', methods=['GET'])
 def sp_cache_collection_get(collection_id):
     """Return information about a cached collection."""
     collection = controller.get_collection(collection_id)
@@ -45,7 +45,7 @@ def sp_cache_collection_get(collection_id):
 
 
 # .....................................................................................
-@bp.route('/collection/<string:collection_id>/occurrences/', methods=('DELETE', 'POST', 'PUT'))
+@bp.route('/collection/<string:collection_id>/occurrences/', methods=['DELETE', 'POST', 'PUT'])
 def collection_occurrences_modify(collection_id):
     if request.method.lower() == 'delete':
         delete_identifiers = request.json['delete_identifiers']
