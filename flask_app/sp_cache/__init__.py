@@ -31,6 +31,7 @@ def sp_cache_status():
     }
 
 
+
 # .....................................................................................
 @bp.route('/collection', methods=['POST'])
 def sp_cache_collection_post():
