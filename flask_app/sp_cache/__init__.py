@@ -43,7 +43,6 @@ def sp_cache_collection_get(collection_id):
     raise NotFound()
 
 
-
 # .....................................................................................
 @bp.route('/collection/<string:collection_id>/occurrences/', methods=['DELETE', 'POST', 'PUT'])
 def collection_occurrences_modify(collection_id):
