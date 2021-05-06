@@ -12,6 +12,8 @@ info:
 servers:
   - url: 'https://syftorium.org/api/v1/'
     description: Base URL for Syftorium services
+  - url: 'http://notyeti-195.lifemapper.org/api/v1/'
+    description: Dev server
 paths:
 #  /data_cleaning:
 #    summary: Endpoint for data cleaning services
