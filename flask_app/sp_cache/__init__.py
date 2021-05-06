@@ -39,7 +39,8 @@ def sp_cache_collection_post():
     Returns:
         dict: Collection information in dictionary format (JSON).
     """
-    collection = models.Collection(request.json)
+    collection_json = request.get_json(force=True)
+    collection = models.Collection(collection_json)
     controller.post_collection(collection)
     # Write collection information backup file
     collection_id = collection.attributes['collection_id']
@@ -47,7 +48,7 @@ def sp_cache_collection_post():
         config.COLLECTION_BACKUP_PATH, '{}.json'.format(collection_id)
     )
     with open(collection_filename, mode='wt') as out_json:
-        json.dump(request.json, out_json)
+        json.dump(collection_json, out_json)
     return controller.get_collection(collection_id).docs[0]
 
 
