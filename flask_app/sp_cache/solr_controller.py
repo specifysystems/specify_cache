@@ -42,7 +42,7 @@ def post_collection(collection):
         collection (Collection): A Collection object to add to the solr index.
     """
     collection_solr = get_collection_solr()
-    collection_solr.add(collection)
+    collection_solr.add(collection.serialize_json())
 
 
 # .....................................................................................

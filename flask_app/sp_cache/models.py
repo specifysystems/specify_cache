@@ -14,8 +14,17 @@ class Collection:
         self.attributes = attribute_dict
 
     # ............................
+    def serialize_json(self):
+        """Serialize the object for JSON responses.
+
+        Returns:
+            dict: A JSON-serializable dictionary.
+        """
+        return self.attributes
+
+    # ............................
     def validate(self):
-        """Validate the Collection to make sure the required elements are present."""
+        """Validate the collection."""
         pass
 
 
