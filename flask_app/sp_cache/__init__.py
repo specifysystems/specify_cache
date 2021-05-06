@@ -48,7 +48,7 @@ def sp_cache_collection_post():
     )
     with open(collection_filename, mode='wt') as out_json:
         json.dump(request.json, out_json)
-    return controller.get_collection(collection_id)
+    return controller.get_collection(collection_id).docs[0]
 
 
 # .....................................................................................
@@ -66,8 +66,8 @@ def sp_cache_collection_get(collection_id):
         NotFound: Raised if the collection is not found.
     """
     collection = controller.get_collection(collection_id)
-    if collection:
-        return collection
+    if collection.hits > 0:
+        return collection.docs[0]
     raise NotFound()
 
 
@@ -120,10 +120,10 @@ def collection_occurrence(collection_id, identifier):
         return controller.delete_collection_occurrences(collection_id, [identifier])
     elif request.method.lower() == 'get':
         specimen = controller.get_specimen(collection_id, identifier)
-        if specimen:
-            return specimen
+        if specimen.hits > 0:
+            return specimen.docs[0]
         raise NotFound()
     elif request.method.lower() == 'put':
         new_specimen_record = models.SpecimenRecord(request.json)
         controller.update_collection_occurrences(collection_id, [new_specimen_record])
-        return controller.get_specimen(collection_id, identifier)
+        return controller.get_specimen(collection_id, identifier).docs[0]

@@ -42,7 +42,7 @@ def post_collection(collection):
         collection (Collection): A Collection object to add to the solr index.
     """
     collection_solr = get_collection_solr()
-    collection_solr.add(collection.serialize_json())
+    collection_solr.add(collection.serialize_json(), commit=True)
 
 
 # .....................................................................................
@@ -97,7 +97,7 @@ def update_collection_occurrences(collection_id, specimens):
         specimens (list of dict): Specimen records to add or replace in the index.
     """
     sp_solr = get_specimen_solr()
-    sp_solr.add(specimens)
+    sp_solr.add(specimens, commit=True)
 
 
 # .....................................................................................
