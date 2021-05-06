@@ -2,7 +2,7 @@
 import json
 import os
 
-from flask import Blueprint
+from flask import Blueprint, request
 from werkzeug.exceptions import NotFound
 
 from . import config as config

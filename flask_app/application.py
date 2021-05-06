@@ -3,7 +3,7 @@ import os
 
 from flask import Flask
 
-import sp_cache
+from  flask_app import sp_cache
 
 
 # .....................................................................................
