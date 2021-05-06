@@ -48,7 +48,7 @@ def sp_cache_collection_post():
     )
     with open(collection_filename, mode='wt') as out_json:
         json.dump(request.json, out_json)
-    return controller.get_collection(collection_id).serialize_json()
+    return controller.get_collection(collection_id)
 
 
 # .....................................................................................
@@ -67,7 +67,7 @@ def sp_cache_collection_get(collection_id):
     """
     collection = controller.get_collection(collection_id)
     if collection:
-        return collection.serialize_json()
+        return collection
     raise NotFound()
 
 
@@ -121,9 +121,9 @@ def collection_occurrence(collection_id, identifier):
     elif request.method.lower() == 'get':
         specimen = controller.get_specimen(collection_id, identifier)
         if specimen:
-            return specimen.serialize_json()
+            return specimen
         raise NotFound()
     elif request.method.lower() == 'put':
         new_specimen_record = models.SpecimenRecord(request.json)
         controller.update_collection_occurrences(collection_id, [new_specimen_record])
-        return controller.get_specimen(collection_id, identifier).serialize_json()
+        return controller.get_specimen(collection_id, identifier)
