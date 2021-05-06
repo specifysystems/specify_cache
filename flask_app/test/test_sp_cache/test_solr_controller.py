@@ -34,12 +34,12 @@ def test_post_get_delete_collection():
 
 
 # .....................................................................................
-def test_post_get_delete_specimen():
-    """Test various specimen operations."""
-    collection_id = 'test_collection'
-    known_identifier = 'bae4b1f5-df83-4183-8b6e-005abc5d97ad'
-    test_filename = '../../test_data/dwc_update.zip'
-    with open(test_filename, mode='rb') as in_file:
-        app_solr.process_occurrence_dca(collection_id, in_file)
-    _ = app_solr.get_specimen(collection_id, known_identifier)
-    app_solr.delete_collection_occurrences(collection_id, [known_identifier])
+# def test_post_get_delete_specimen():
+#     """Test various specimen operations."""
+#     collection_id = 'test_collection'
+#     known_identifier = 'bae4b1f5-df83-4183-8b6e-005abc5d97ad'
+#     test_filename = '../../test_data/dwc_update.zip'
+#     with open(test_filename, mode='rb') as in_file:
+#         app_solr.process_occurrence_dca(collection_id, in_file)
+#     _ = app_solr.get_specimen(collection_id, known_identifier)
+#     app_solr.delete_collection_occurrences(collection_id, [known_identifier])

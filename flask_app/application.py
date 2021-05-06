@@ -3,6 +3,8 @@ import os
 
 from flask import Flask
 
+import sp_cache
+
 
 # .....................................................................................
 def create_app(test_config=None):
@@ -34,7 +36,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import sp_cache
+    @app.route('/')
+    def syftorium_root():
+        """Root endpoint for all services under syftorium umbrella.
+
+        Returns:
+            str: A string welcoming the user to the syftorium
+        """
+        return 'Welcome to the Syftorium!'
+
     app.register_blueprint(sp_cache.bp)
 
     return app
