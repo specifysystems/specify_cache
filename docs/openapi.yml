@@ -241,12 +241,23 @@ components:
     example_new_collection:
       value: |-
         {
-          "collection_name": "Example collection"
+          "collection_name": "Fish Tissue Collection",
+          "institution_name": "University of Kansas",
+          "collection_id": "ku_fish_tissue",
+          "collection_location": "Lawrence, Kansas USA",
+          "contact_email": "fish_collection@example.com",
+          "contact_name": "Fish Contact",
+          "public_key": "COLLECTION PUBLIC KEY"
         }
     simple_collection_status:
       value: |-
         {
-          "collection_id": "abcd-efgh-ijklm",
+          "collection_name": "Fish Tissue Collection",
+          "institution_name": "University of Kansas",
+          "collection_id": "ku_fish_tissue",
+          "collection_location": "Lawrence, Kansas USA",
+          "contact_email": "fish_collection@example.com",
+          "contact_name": "Fish Contact",
           "record_count": 23423
         }
   requestBodies:
@@ -290,9 +301,11 @@ components:
           type: string
           format: date-time
         collection_location:
-          $ref: '#/components/schemas/locality'
-        contact:
-          $ref: '#/components/schemas/contact'
+          type: string
+        contact_email:
+          type: string
+        contact_name:
+          type: string
     contact:
       type: object
     locality:
@@ -306,15 +319,12 @@ components:
           type: string
         collection_id:
           type: string
-        record_count:
-          type: integer
-        last_updated:
-          type: string
-          format: date-time
         collection_location:
-          $ref: '#/components/schemas/locality'
-        contact:
-          $ref: '#/components/schemas/contact'
+          type: string
+        contact_email:
+          type: string
+        contact_name:
+          type: string
         public_key:
           type: string
     occurrence:
