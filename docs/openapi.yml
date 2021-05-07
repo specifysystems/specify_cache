@@ -118,6 +118,8 @@ paths:
       summary: Add or update collection information for a specific collection id
       description: ''
       operationId: sp_cache.collection.collection_id.put
+      requestBody:
+        $ref: '#/components/requestBodies/new_collection'
       responses:
         204:
           description: Collection information updated successfully
