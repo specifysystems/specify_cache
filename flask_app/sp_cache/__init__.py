@@ -1,4 +1,5 @@
 """Flask functions for Specify Cache."""
+import datetime
 import json
 import os
 
@@ -89,17 +90,19 @@ def collection_occurrences_modify(collection_id):
     """
     if request.method.lower() in ['post', 'put']:
         # Write data to file system for another process to pick up and handle
-        date_string = 'YY_MM_DD_HH_MM_SS'
+        now = datetime.datetime.now()
+        date_string = now.strftime('%Y_%m_%d_%H_%M_%S')
         dwca_filename = os.path.join(
-            config.DWCA_PATH, 'collection-{}-{}-{}'.format(
+            config.DWCA_PATH, 'collection-{}-{}-{}.zip'.format(
                 collection_id, request.method.lower(), date_string
             )
         )
-        with open(dwca_filename, mode='wb') as dwca_out:
+        with open(dwca_filename, mode='w') as dwca_out:
             dwca_out.write(request.data)
     elif request.method.lower() == 'delete':
         delete_identifiers = request.json['delete_identifiers']
         controller.delete_collection_occurrences(collection_id, delete_identifiers)
+    return ('', 204)
 
 
 # .....................................................................................
