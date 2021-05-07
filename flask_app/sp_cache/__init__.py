@@ -53,8 +53,8 @@ def sp_cache_collection_post():
 
 
 # .....................................................................................
-@bp.route('/collection/<string:collection_id>', methods=['GET'])
-def sp_cache_collection_get(collection_id):
+@bp.route('/collection/<string:collection_id>', methods=['GET', 'PUT'])
+def sp_cache_collection_get_or_put(collection_id):
     """Return information about a cached collection.
 
     Args:
@@ -66,6 +66,10 @@ def sp_cache_collection_get(collection_id):
     Raises:
         NotFound: Raised if the collection is not found.
     """
+    if request.method.lower() == 'put':
+        collection_json = request.get_json(force=True)
+        collection = models.Collection(collection_json)
+        controller.update_collection(collection)
     collection = controller.get_collection(collection_id)
     if collection.hits > 0:
         return collection.docs[0]
