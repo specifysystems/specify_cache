@@ -18,7 +18,7 @@
     Include @SSL_OPTIONS_FILE@
     # SSLCertificateChainFile /etc/letsencrypt/live/notyeti-195.lifemapper.org/chain.pem
     SSLCertificateChainFile @CHAIN_FILE@
- 
+
     WSGIDaemonProcess syftorium threads=5
     WSGIScriptAlias /api/v1 /var/www/syftorium/syftorium.wsgi
 

@@ -16,7 +16,7 @@ solr_location = 'notyeti-192.lifemapper.org'
 class ResolveSvc(_S2nService):
     """Query the Specify Resolver with a UUID for a resolvable GUID and URL"""
     SERVICE_TYPE = APIService.Resolve
-    
+
     # ...............................................
     @staticmethod
     def get_url_from_meta(std_output):
@@ -36,7 +36,7 @@ class ResolveSvc(_S2nService):
                     msg = ('No direct record access to {}'.format(url))
                     url = None
         return (url, msg)
-    
+
     # ...............................................
     def get_specify_records(self, occid):
         try:
@@ -45,7 +45,7 @@ class ResolveSvc(_S2nService):
         except Exception as e:
             traceback = get_traceback()
             output = self.get_failure(
-                provider=ServiceProvider.Specify[S2nKey.NAME], query_term=occid, 
+                provider=ServiceProvider.Specify[S2nKey.NAME], query_term=occid,
                 errors=[traceback])
         return output.response
 
@@ -54,7 +54,7 @@ class ResolveSvc(_S2nService):
         std_output = SpSolr.count_docs(
             SPECIFY.RESOLVER_COLLECTION, SPECIFY.RESOLVER_LOCATION)
         return std_output
-    
+
     # ...............................................
     def _show_online(self, providers=None):
         std_output = self.count_specify_guid_recs()
@@ -88,23 +88,23 @@ class ResolveSvc(_S2nService):
             record_format=S2n.RECORD_FORMAT)
         return full_out
 
-        
+
     # ...............................................
     def GET(self, occid=None, provider=None, **kwargs):
         """Get zero or one record for an identifier from the resolution
         service du jour (DOI, ARK, etc) or get a count of all records indexed
         by this resolution service.
-        
+
         Args:
-            occid: an occurrenceID, a DarwinCore field intended for a globally 
+            occid: an occurrenceID, a DarwinCore field intended for a globally
                 unique identifier (https://dwc.tdwg.org/list/#dwc_occurrenceID)
             kwargs: any additional keyword arguments are ignored
 
         Return:
-            A dictionary of metadata and a count of records found in GBIF and 
+            A dictionary of metadata and a count of records found in GBIF and
             an optional list of records.
-                
-        Note: 
+
+        Note:
             There will never be more than one record returned.
         """
         try:
@@ -113,7 +113,7 @@ class ResolveSvc(_S2nService):
             valid_providers = self.get_providers()
             req_providers = self.get_valid_requested_providers(
                 usr_params['provider'], valid_providers)
-            
+
             # What to query: address one occurrence record, with optional filters
             occid = usr_params['occid']
             if occid is None:
@@ -131,7 +131,7 @@ class ResolveSvc(_S2nService):
 if __name__ == '__main__':
     # test
     from lmtrex.common.lmconstants import TST_VALUES
-    
+
     for occid in TST_VALUES.GUIDS_WO_SPECIFY_ACCESS[:1]:
         print(occid)
         # Specify ARK Record
