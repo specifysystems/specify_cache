@@ -4,7 +4,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
-from  flask_app import sp_cache
+from flask_app import sp_cache, resolver
 
 
 # .....................................................................................
@@ -48,5 +48,6 @@ def create_app(test_config=None):
         return 'Welcome to the Syftorium!'
 
     app.register_blueprint(sp_cache.bp)
+    app.register_blueprint(resolver.routes.bp)
 
     return app

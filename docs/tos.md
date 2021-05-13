@@ -33,5 +33,3 @@ Data sharing: The process of and agreements for making data freely and universal
 User: Anyone who uses the Internet to access data through the Lifemapper services.
 Owner of data: The legal entity possessing the right resulting from the act of creating a digital record. The record may be a product derived from another, possibly non-digital product, which may affect the right.
 Sensitive data: Any data that the provider does not want to make available, e.g. precise localities of endangered species.
-
-

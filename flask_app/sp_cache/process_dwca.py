@@ -1,11 +1,14 @@
 """Process a Darwin Core Archive and add the data to the Specify Cache."""
 import argparse
 import csv
+import glob
 import io
+import os
+import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
-# import solr_controller as solr_app
+import solr_controller as controller
 
 
 DEFAULT_META_FILENAME = 'meta.xml'
@@ -39,7 +42,7 @@ def get_full_tag(tag, namespace=TARGET_NAMESPACE):
 
 
 # .....................................................................................
-def post_results(post_recs, collection_id):
+def post_results(post_recs, collection_id, mod_time):
     """Post results to Solr index and resolver.
 
     Args:
@@ -47,14 +50,11 @@ def post_results(post_recs, collection_id):
             to solr.
         collection_id (str): An identifier associated with the collection containing
             these records.
+        mod_time (tuple): A tuple of year, month, day modification time.
     """
-    # sp_solr = solr_app.get_specimen_solr()
-    # sp_solr.add
+    controller.update_collection_occurrences(collection_id, post_recs)
     print('Post results to solr!')
     print('Create and post results to resolver!')
-    year = 2021
-    month = 5
-    day = 4
     csv_lines = [
         'id,institutionCode,collectionCode,datasetName,basisOfRecord,year,month,day,url'
     ]
@@ -70,9 +70,9 @@ def post_results(post_recs, collection_id):
                 rec['collectionCode'],
                 rec['datasetName'],
                 rec['basisOfRecord'],
-                year,
-                month,
-                day,
+                int(mod_time[0]),
+                int(mod_time[1]),
+                int(mod_time[2]),
                 url
             )
         )
@@ -131,7 +131,8 @@ def process_occurrence_file(
     fields,
     my_params,
     csv_reader_params,
-    collection_id
+    collection_id,
+    mod_time
 ):
     """Process an occurrence file.
 
@@ -141,6 +142,7 @@ def process_occurrence_file(
         my_params (dict): A dictionary of our parameters for processing data.
         csv_reader_params (dict): A dictionary of parameters to forward to csv.reader.
         collection_id (str): An identifier for the collection these data are from.
+        mod_time (tuple): Modification time information tuple.
     """
     for _ in range(int(my_params['num_header_rows'])):
         print(next(occurrence_file))
@@ -150,10 +152,10 @@ def process_occurrence_file(
         rec = {fields[idx]: row[idx] for idx in fields.keys()}
         solr_post_recs.append(rec)
         if len(solr_post_recs) >= SOLR_POST_LIMIT:
-            post_results(solr_post_recs, collection_id)
+            post_results(solr_post_recs, collection_id, mod_time)
             solr_post_recs = []
     if len(solr_post_recs) > 0:
-        post_results(solr_post_recs, collection_id)
+        post_results(solr_post_recs, collection_id, mod_time)
 
 
 # .....................................................................................
@@ -165,6 +167,11 @@ def process_dwca(dwca_filename, collection_id, meta_filename=DEFAULT_META_FILENA
         collection_id (str): An identifier for the collection containing these data.
         meta_filename (str): A file contained in the archive containing metadata.
     """
+    # Get the last segment which should contain time information
+    time_parts = dwca_filename.split('-post-')[-1].split('_')
+    # Year month day are the first three parts to time information
+    mod_time = time_parts[:3]
+
     with zipfile.ZipFile(dwca_filename) as zip_archive:
         meta_xml_contents = zip_archive.read(meta_filename)
         occurrence_filename, fields, my_params, csv_reader_params = process_meta_xml(
@@ -175,7 +182,29 @@ def process_dwca(dwca_filename, collection_id, meta_filename=DEFAULT_META_FILENA
                 zip_archive.open(
                     occurrence_filename, mode='r'
                 )
-            ), fields, my_params, csv_reader_params, collection_id
+            ), fields, my_params, csv_reader_params, collection_id, mod_time
+        )
+
+
+# .....................................................................................
+def process_dwca_directory(in_directory, out_directory):
+    """Process the Darwin Core Archive files in the input directory and move them.
+
+    Args:
+        in_directory (str): A directory of Darwin Core Archive files to ingest.
+        out_directory (str): A directory to store processed DwCA files.
+    """
+    dwca_files = glob.glob(os.path.join(in_directory, 'collection_*.zip'))
+    dwca_files.sort(key=os.path.getmtime)
+    for dwca_filename in dwca_files:
+        # File pattern is: "collection-{collection_id}-post-YYYY_MM_DD_HH_MM_SS.zip"
+        # Get collection id, handle scenario where -post- is present within
+        collection_id = '-post-'.join(
+            dwca_filename.split('collection-')[1].split('-post-')[:-1]
+        )
+        process_dwca(dwca_filename, collection_id)
+        shutil.move(
+            dwca_filename, os.path.join(out_directory, os.path.basename(dwca_filename))
         )
 
 
@@ -183,10 +212,12 @@ def process_dwca(dwca_filename, collection_id, meta_filename=DEFAULT_META_FILENA
 def main():
     """Main method for script."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('collection_id', type=str, help='Collection identifier')
-    parser.add_argument('dwca_filename', type=str, help='File path to DwC-A file')
+    parser.add_argument(
+        'in_dwca_directory', type=str, help='Directory if incoming DWCA files.')
+    parser.add_argument(
+        'out_dwca_directory', type=str, help='Directory if processed DWCA files.')
     args = parser.parse_args()
-    process_dwca(args.dwca_filename, args.collection_id)
+    process_dwca_directory(args.in_dwca_directory, args.out_dwca_directory)
 
 
 # .....................................................................................

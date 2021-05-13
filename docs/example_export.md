@@ -17,44 +17,44 @@ Archive.  This document is required for all Darwin Core Archive packages.
     <files><location>occurrences.csv</location>	</files>
     <id index="0"/>
     <field index="1" term="http://rs.tdwg.org/dwc/terms/accessRights"/>
-    <field index="2" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/> 
-    <field index="3" term="http://rs.tdwg.org/dwc/terms/catalogNumber"/> 
-    <field index="4" term="http://rs.tdwg.org/dwc/terms/collectionCode"/> 
-    <field index="5" term="http://rs.tdwg.org/dwc/terms/continent"/> 
-    <field index="6" term="http://rs.tdwg.org/dwc/terms/country"/> 
-    <field index="7" term="http://rs.tdwg.org/dwc/terms/county"/> 
-    <field index="8" term="http://rs.tdwg.org/dwc/terms/datasetName"/> 
-    <field index="9" term="http://rs.tdwg.org/dwc/terms/decimallatitude"/> 
-    <field index="10" term="http://rs.tdwg.org/dwc/terms/decimallongitude"/> 
-    <field index="11" term="http://rs.tdwg.org/dwc/terms/eventDate"/> 
-    <field index="12" term="http://rs.tdwg.org/dwc/terms/geodeticDatum"/> 
-    <field index="13" term="http://rs.tdwg.org/dwc/terms/institutionCode"/> 
-    <field index="14" term="http://rs.tdwg.org/dwc/terms/institutionID"/> 
-    <field index="15" term="http://rs.tdwg.org/dwc/terms/kingdom"/> 
-    <field index="16" term="http://rs.tdwg.org/dwc/terms/locality"/> 
-    <field index="17" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/> 
-    <field index="18" term="http://rs.tdwg.org/dwc/terms/preparations"/> 
-    <field index="19" term="http://rs.tdwg.org/dwc/terms/rights"/> 
-    <field index="20" term="http://rs.tdwg.org/dwc/terms/stateprovince"/> 
-    
-    <field index="21" term="http://rs.tdwg.org/dwc/terms/class"/> 
-    <field index="22" term="http://rs.tdwg.org/dwc/terms/family"/> 
-    <field index="23" term="http://rs.tdwg.org/dwc/terms/genus"/> 
-    <field index="24" term="http://rs.tdwg.org/dwc/terms/order"/> 
-    <field index="25" term="http://rs.tdwg.org/dwc/terms/phylum"/> 
-    <field index="26" term="http://rs.tdwg.org/dwc/terms/scientificName"/> 
-    <field index="27" term="http://rs.tdwg.org/dwc/terms/scientificNameAuthorship"/> 
-    <field index="28" term="http://rs.tdwg.org/dwc/terms/specificepithet"/> 
-    
-    <field index="29" term="http://rs.tdwg.org/dwc/terms/modified"/> 
-    <field index="30" term="http://rs.tdwg.org/dwc/terms/globaluniqueidentifier"/> 
-    <field index="31" term="http://rs.tdwg.org/dwc/terms/preparations"/> 
-    <field index="32" term="http://rs.tdwg.org/dwc/terms/recordedBy"/> 
-    <field index="33" term="http://rs.tdwg.org/dwc/terms/license"/> 
-    <field index="34" term="http://rs.tdwg.org/dwc/terms/datasetname"/> 
-    <field index="35" term="http://rs.tdwg.org/dwc/terms/fieldnumber"/> 
-    <field index="36" term="http://rs.tdwg.org/dwc/terms/highergeography"/> 
-    <field index="37" term="http://rs.tdwg.org/dwc/terms/waterbody"/> 
+    <field index="2" term="http://rs.tdwg.org/dwc/terms/basisOfRecord"/>
+    <field index="3" term="http://rs.tdwg.org/dwc/terms/catalogNumber"/>
+    <field index="4" term="http://rs.tdwg.org/dwc/terms/collectionCode"/>
+    <field index="5" term="http://rs.tdwg.org/dwc/terms/continent"/>
+    <field index="6" term="http://rs.tdwg.org/dwc/terms/country"/>
+    <field index="7" term="http://rs.tdwg.org/dwc/terms/county"/>
+    <field index="8" term="http://rs.tdwg.org/dwc/terms/datasetName"/>
+    <field index="9" term="http://rs.tdwg.org/dwc/terms/decimallatitude"/>
+    <field index="10" term="http://rs.tdwg.org/dwc/terms/decimallongitude"/>
+    <field index="11" term="http://rs.tdwg.org/dwc/terms/eventDate"/>
+    <field index="12" term="http://rs.tdwg.org/dwc/terms/geodeticDatum"/>
+    <field index="13" term="http://rs.tdwg.org/dwc/terms/institutionCode"/>
+    <field index="14" term="http://rs.tdwg.org/dwc/terms/institutionID"/>
+    <field index="15" term="http://rs.tdwg.org/dwc/terms/kingdom"/>
+    <field index="16" term="http://rs.tdwg.org/dwc/terms/locality"/>
+    <field index="17" term="http://rs.tdwg.org/dwc/terms/occurrenceID"/>
+    <field index="18" term="http://rs.tdwg.org/dwc/terms/preparations"/>
+    <field index="19" term="http://rs.tdwg.org/dwc/terms/rights"/>
+    <field index="20" term="http://rs.tdwg.org/dwc/terms/stateprovince"/>
+
+    <field index="21" term="http://rs.tdwg.org/dwc/terms/class"/>
+    <field index="22" term="http://rs.tdwg.org/dwc/terms/family"/>
+    <field index="23" term="http://rs.tdwg.org/dwc/terms/genus"/>
+    <field index="24" term="http://rs.tdwg.org/dwc/terms/order"/>
+    <field index="25" term="http://rs.tdwg.org/dwc/terms/phylum"/>
+    <field index="26" term="http://rs.tdwg.org/dwc/terms/scientificName"/>
+    <field index="27" term="http://rs.tdwg.org/dwc/terms/scientificNameAuthorship"/>
+    <field index="28" term="http://rs.tdwg.org/dwc/terms/specificepithet"/>
+
+    <field index="29" term="http://rs.tdwg.org/dwc/terms/modified"/>
+    <field index="30" term="http://rs.tdwg.org/dwc/terms/globaluniqueidentifier"/>
+    <field index="31" term="http://rs.tdwg.org/dwc/terms/preparations"/>
+    <field index="32" term="http://rs.tdwg.org/dwc/terms/recordedBy"/>
+    <field index="33" term="http://rs.tdwg.org/dwc/terms/license"/>
+    <field index="34" term="http://rs.tdwg.org/dwc/terms/datasetname"/>
+    <field index="35" term="http://rs.tdwg.org/dwc/terms/fieldnumber"/>
+    <field index="36" term="http://rs.tdwg.org/dwc/terms/highergeography"/>
+    <field index="37" term="http://rs.tdwg.org/dwc/terms/waterbody"/>
   </core>
 
 </archive>
