@@ -6,9 +6,9 @@ import os
 from flask import Blueprint, request
 from werkzeug.exceptions import NotFound
 
-from . import config as config
-from . import models as models
-from . import solr_controller as controller
+import config as config
+import models as models
+import solr_controller as controller
 
 
 bp = Blueprint('sp_cache', __name__, url_prefix='/sp_cache')
