@@ -22,6 +22,19 @@ def get_resolver_solr():
 
 
 # .....................................................................................
+def get_endpoint_metadata():
+    """Get Solr endpoint metadata.
+
+    Returns:
+        dict: Metadata about the endpoint.
+    """
+    resolver_solr = get_resolver_solr()
+    return {
+        'count': resolver_solr.search('*').hits
+    }
+
+
+# .....................................................................................
 def get_identifier(identifier):
     """Get information about an identifier from the Solr Resolver collection.
 
