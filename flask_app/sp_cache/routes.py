@@ -97,7 +97,7 @@ def collection_occurrences_modify(collection_id):
                 collection_id, request.method.lower(), date_string
             )
         )
-        with open(dwca_filename, mode='w') as dwca_out:
+        with open(dwca_filename, mode='wb') as dwca_out:
             dwca_out.write(request.data)
     elif request.method.lower() == 'delete':
         delete_identifiers = request.json['delete_identifiers']
