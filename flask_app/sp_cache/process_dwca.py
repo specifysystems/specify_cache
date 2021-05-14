@@ -200,9 +200,11 @@ def process_dwca_directory(in_directory, out_directory):
         in_directory (str): A directory of Darwin Core Archive files to ingest.
         out_directory (str): A directory to store processed DwCA files.
     """
-    dwca_files = glob.glob(os.path.join(in_directory, 'collection_*.zip'))
+    glob_path = os.path.join(in_directory, 'collection-*.zip')
+    dwca_files = glob.glob(glob_path)
     dwca_files.sort(key=os.path.getmtime)
     for dwca_filename in dwca_files:
+        print('Processing file: {}'.format(dwca_filename))
         # File pattern is: "collection-{collection_id}-post-YYYY_MM_DD_HH_MM_SS.zip"
         # Get collection id, handle scenario where -post- is present within
         collection_id = '-post-'.join(
