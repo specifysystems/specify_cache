@@ -52,6 +52,52 @@ paths:
 #        required: true
 #        schema:
 #          type: string
+  /resolve:
+    summary: Endpoint for the Resolver
+    get:
+      summary: Get metadata about the resolver endpoint
+      operationId: resolver.get
+      responses:
+        200:
+          description: Basic status metadata about the resolver
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resolver_status'
+      tags:
+        - resolver
+    post:
+      summary: Add new identifier entries into the resolver
+      operationId: resolver.post
+      requestBody:
+        $ref: '#/components/requestBodies/resolver_post'
+      responses:
+        204:
+          description: Successfully accepted data for inclusion in the resolver
+      tags:
+        - resolver
+
+  '/resolve/{identifier}':
+    summary: Resolvable identifier endpoint
+    parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get resolvable identifier information.
+      operationId: resolver.object.get
+      responses:
+        200:
+          description: Metadata about the resolvable identifier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resolver_object'
+      tags:
+        - resolver
+
   /sp_cache:
     summary: Endpoint for Specify collection caches
     get:
@@ -157,7 +203,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/cache_data_post'
       responses:
-        202:
+        204:
           description: Successfully accepted data for inclusion in the cache
         403:
           description: Not authorized to post data for this collection
@@ -172,7 +218,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/cache_data_post'
       responses:
-        202:
+        204:
           description: Successfully accepted data for inclusion in the cache
         403:
           description: Not authorized to post data for this collection
@@ -280,6 +326,12 @@ components:
             example_new_collection:
               $ref: '#/components/examples/example_new_collection'
       required: true
+    resolver_post:
+      description: Identifier records to be added to the resolver
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resolver_post'
     update_cache_occurrence_record:
       description: Updated data that should replace existing cached occurrence record
       content:
@@ -331,6 +383,48 @@ components:
           type: string
     occurrence:
       type: object
+    resolver_object:
+      type: object
+      properties:
+        id:
+          type: string
+        dataset_guid:
+          type: string
+        who:
+          type: string
+        what:
+          type: string
+        when:
+          type: string
+        where:
+          type: string
+        url:
+          type: string
+    resolver_post:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          dataset_guid:
+            type: string
+          who:
+            type: string
+          what:
+            type: string
+          when:
+            type: string
+          where:
+            type: string
+          url:
+            type: string
+    resolver_status:
+      type: object
+      properties:
+        count:
+          description: The number of documents indexed by the resolver
+          type: integer
     server_status:
       type: object
       properties:
