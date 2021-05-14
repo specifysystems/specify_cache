@@ -27,6 +27,8 @@ MY_PARAMS = [
 ]
 RESOLVER_ENDPOINT_URL = 'https://notyeti-195.lifemapper.org/api/v1/resolve'
 SOLR_POST_LIMIT = 1000
+# Valid fields for identifier in reverse preference order (best option last)
+VALID_IDENTIFIERS = ['occurrenceID', 'globaluniqueidentifier']
 
 
 # .....................................................................................
@@ -156,6 +158,10 @@ def process_occurrence_file(
     solr_post_recs = []
     for row in reader:
         rec = {fields[idx]: row[idx] for idx in fields.keys()}
+        # Set identifier field
+        for ident_field in VALID_IDENTIFIERS:
+            if ident_field in rec.keys() and len(rec[ident_field]) > 0:
+                rec['identifier'] = rec[ident_field]
         solr_post_recs.append(rec)
         if len(solr_post_recs) >= SOLR_POST_LIMIT:
             post_results(solr_post_recs, collection_id, mod_time)
