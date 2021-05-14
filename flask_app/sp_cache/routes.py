@@ -128,10 +128,10 @@ def collection_occurrence(collection_id, identifier):
         return controller.delete_collection_occurrences(collection_id, [identifier])
     elif request.method.lower() == 'get':
         specimen = controller.get_specimen(collection_id, identifier)
-        if specimen.hits > 0:
-            return specimen.docs[0]
+        if specimen is not None:
+            return specimen.serialize_json()
         raise NotFound()
     elif request.method.lower() == 'put':
         new_specimen_record = models.SpecimenRecord(request.json)
         controller.update_collection_occurrences(collection_id, [new_specimen_record])
-        return controller.get_specimen(collection_id, identifier).docs[0]
+        return controller.get_specimen(collection_id, identifier).serialize_json()
