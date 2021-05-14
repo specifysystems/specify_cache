@@ -1,7 +1,7 @@
 """Flask route definitions for the resolver."""
 from flask import Blueprint, request
 
-import controller as controller
+import flask_app.resolver.controller as controller
 
 OCCURRENCE_ID_QUERY_PARAMETER = 'occid'
 PROVIDER_QUERY_PARAMETER = 'provider'
