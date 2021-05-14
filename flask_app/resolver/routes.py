@@ -1,6 +1,7 @@
 """Flask route definitions for the resolver."""
 import csv
 from flask import Blueprint, request
+import io
 from werkzeug.exceptions import NotFound, UnsupportedMediaType
 
 import flask_app.resolver.solr_controller as controller
@@ -27,7 +28,8 @@ def resolver_endpoint():
     else:
         content_type = request.headers.get('Content-Type', default='text/csv').lower()
         if content_type == 'text/csv':
-            reader = csv.DictReader(request.data)
+            csv_data = io.StringIO(request.data)
+            reader = csv.DictReader(csv_data)
             records = [Ark(record) for record in reader]
         elif content_type == 'application/json':
             records = [Ark[record] for record in request.json]
