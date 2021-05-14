@@ -110,7 +110,7 @@ def delete_collection_occurrences(collection_id, identifiers):
     """
     sp_solr = get_specimen_solr()
     sp_solr.delete(
-        'q=collection_id:{},identifier={}'.format(collection_id, ','.join(identifiers))
+        q=['collection_id:{}'.format(collection_id),'identiifer:{}'.format(identifier)]
     )
 
 
@@ -127,6 +127,6 @@ def get_specimen(collection_id, identifier):
     """
     sp_solr = get_specimen_solr()
     rec = sp_solr.search(
-        'q=collection_id:{},identiifer:{}'.format(collection_id, identifier)
+        q=['collection_id:{}'.format(collection_id),'identiifer:{}'.format(identifier)]
     )
     return SpecimenRecord(rec)
