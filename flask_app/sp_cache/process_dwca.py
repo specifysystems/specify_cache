@@ -158,10 +158,15 @@ def process_occurrence_file(
     solr_post_recs = []
     for row in reader:
         rec = {fields[idx]: row[idx] for idx in fields.keys()}
+        rec['collection_id'] = collection_id
         # Set identifier field
         for ident_field in VALID_IDENTIFIERS:
             if ident_field in rec.keys() and len(rec[ident_field]) > 0:
                 rec['identifier'] = rec[ident_field]
+        # Remove empty strings
+        for k in rec.keys():
+            if rec[k] == '':
+                rec.pop(k)
         solr_post_recs.append(rec)
         if len(solr_post_recs) >= SOLR_POST_LIMIT:
             post_results(solr_post_recs, collection_id, mod_time)
