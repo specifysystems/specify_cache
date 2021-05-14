@@ -25,7 +25,8 @@ MY_PARAMS = [
     ('num_header_rows', 'ignoreHeaderLines'),
     ('row_type', 'rowType'),
 ]
-RESOLVER_ENDPOINT_URL = 'https://notyeti-195.lifemapper.org/api/v1/resolve'
+SERVER_URL = 'https://notyeti-195.lifemapper.org/'
+RESOLVER_ENDPOINT_URL = '{}api/v1/resolve'.format(SERVER_URL)
 SOLR_POST_LIMIT = 1000
 # Valid fields for identifier in reverse preference order (best option last)
 VALID_IDENTIFIERS = ['occurrenceID', 'globaluniqueidentifier']
@@ -59,8 +60,8 @@ def post_results(post_recs, collection_id, mod_time):
     solr_response = controller.update_collection_occurrences(collection_id, post_recs)
     resolver_recs = []
     for rec in post_recs:
-        url = 'https://syftorium.org/sp_cache/collections/{}/specimens/{}'.format(
-            collection_id, rec['id']
+        url = '{}api/v1/sp_cache/collection/{}/specimens/{}'.format(
+            SERVER_URL, collection_id, rec['id']
         )
         resolver_recs.append(
             {
