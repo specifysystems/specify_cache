@@ -1,34 +1,59 @@
 """Flask route definitions for the resolver."""
+import csv
 from flask import Blueprint, request
+from werkzeug.exceptions import NotFound, UnsupportedMediaType
 
 import flask_app.resolver.controller as controller
-
-OCCURRENCE_ID_QUERY_PARAMETER = 'occid'
-PROVIDER_QUERY_PARAMETER = 'provider'
+from flask_app.resolver.models import Ark
 
 bp = Blueprint('resolve', __name__, url_prefix='/resolve')
 
 
 # .....................................................................................
-@bp.route('/', methods=['GET'])
-def resolver_get():
-    """Get zero or one record from the resolution service du jour.
+@bp.route('/', methods=['GET', 'POST'])
+def resolver_endpoint():
+    """Handle requests to the base resolver endpoint.
 
-    Get zero or one record for an identifier from the resolution service du jour
-    (DOI, ARK, etc) or get a count of all records indexed by this resolution service.
+    Raises:
+        UnsupportedMediaType: Raised if the content-type of the
+            request data is something other than text/csv or application/json.
 
     Returns:
-        dict - A dictionary of metadata and a count of records found in GBIF and an
-            optional list of records.
-
-    Note:
-        There will never be more than one record returned.
+        dict: A dictionary of metadata about the collection holdings on GET.
+        tuple: A tuple of empty string and HTTP status 204 for new POSTs.
     """
-    occurrence_id = request.args.get(
-        OCCURRENCE_ID_QUERY_PARAMETER, type=str, default=None
-    )
-    provider = ','.join(request.args.getlist(PROVIDER_QUERY_PARAMETER))
-    if len(provider) == 0:
-        provider = None
-    resolver_service = controller.ResolveSvc()
-    return resolver_service.GET(occid=occurrence_id, provider=provider)
+    if request.method.lower() == 'get':
+        return controller.get_endpoint_metadata()
+    else:
+        content_type = request.headers.get('Content-Type', default='text/csv').lower()
+        if content_type == 'text/csv':
+            reader = csv.DictReader(request.data)
+            records = [Ark(record) for record in reader]
+        elif content_type == 'application/json':
+            records = [Ark[record] for record in request.json]
+        else:
+            raise UnsupportedMediaType(
+                'Cannot ingest {} records this time.'.format(content_type)
+            )
+        controller.post_identifiers(records)
+        return ('', 204)
+
+
+# .....................................................................................
+@bp.route('/<string:identifier>', methods=['GET'])
+def resolver_get(identifier):
+    """Get a record from the resolver collection.
+
+    Args:
+        identifier (str): An identifier to look for in the index.
+
+    Raises:
+        NotFound: Raised if the requested record is not found.
+
+    Returns:
+        dict: A dictionary of metadata for the requested record.
+    """
+    record = controller.get_identifier(identifier)
+    if record is None:
+        raise NotFound('The requested identifier was not found: {}'.format(identifier))
+    return record
