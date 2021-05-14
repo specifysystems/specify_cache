@@ -41,6 +41,9 @@
     <field name="stateprovince" type="string" indexed="true" stored="true" />
     <field name="waterbody" type="string" indexed="true" stored="true" />
 
+    <!-- Extra specify field -->
+    <field name="id" type="string" indexed="true" stored="true" />
+
     <uniqueKey>identifier</uniqueKey>
 
     <!-- Field types -->
