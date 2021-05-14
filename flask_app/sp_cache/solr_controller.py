@@ -129,4 +129,6 @@ def get_specimen(collection_id, identifier):
     rec = sp_solr.search(
         q=['collection_id:{}'.format(collection_id),'identiifer:{}'.format(identifier)]
     )
-    return SpecimenRecord(rec)
+    if rec.hits > 0:
+        return SpecimenRecord(rec)
+    return None
