@@ -57,34 +57,23 @@ def post_results(post_recs, collection_id, mod_time):
         mod_time (tuple): A tuple of year, month, day modification time.
     """
     controller.update_collection_occurrences(collection_id, post_recs)
-    print('Post results to solr!')
-    print('Create and post results to resolver!')
-    csv_lines = [
-        'id,institutionCode,collectionCode,datasetName,basisOfRecord,year,month,day,url'
-    ]
+    resolver_recs = []
     for rec in post_recs:
         url = 'https://syftorium.org/sp_cache/collections/{}/specimens/{}'.format(
             collection_id, rec['id']
         )
-
-        csv_lines.append(
-            '{},{},{},{},{},{},{},{},{}'.format(
-                rec['occurrenceID'],
-                rec['institutionCode'],
-                rec['collectionCode'],
-                rec['datasetName'],
-                rec['basisOfRecord'],
-                int(mod_time[0]),
-                int(mod_time[1]),
-                int(mod_time[2]),
-                url
-            )
+        resolver_recs.append(
+            {
+                'id': rec['occurrenceID'],
+                'dataset_guid': rec['datasetName'],
+                'who': rec['collectionCode'],
+                'what': rec['basisOfRecord'],
+                'when': '{}-{}-{}'.format(*mod_time),
+                'where': rec['institutionCode'],
+                'url': url
+            }
         )
-    resolver_data = '\n'.join(csv_lines)
-    resolver_response = requests.post(
-        RESOLVER_ENDPOINT_URL, data=resolver_data, headers={'Content-Type': 'text/csv'}
-    )
-    print(resolver_data)
+    resolver_response = requests.post(RESOLVER_ENDPOINT_URL, json=resolver_recs)
     print(resolver_response)
 
 
