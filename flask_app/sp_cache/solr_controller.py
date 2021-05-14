@@ -130,5 +130,5 @@ def get_specimen(collection_id, identifier):
         q=['collection_id:{}'.format(collection_id),'identiifer:{}'.format(identifier)]
     )
     if rec.hits > 0:
-        return SpecimenRecord(rec)
+        return SpecimenRecord(rec.docs[0])
     return None
