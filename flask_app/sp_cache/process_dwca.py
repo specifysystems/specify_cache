@@ -4,6 +4,7 @@ import csv
 import glob
 import io
 import os
+import requests
 import shutil
 import xml.etree.ElementTree as ET
 import zipfile
@@ -24,6 +25,7 @@ MY_PARAMS = [
     ('num_header_rows', 'ignoreHeaderLines'),
     ('row_type', 'rowType'),
 ]
+RESOLVER_ENDPOINT_URL = 'https://notyeti-195.lifemapper.org/api/v1/resolve'
 SOLR_POST_LIMIT = 1000
 
 
@@ -77,7 +79,11 @@ def post_results(post_recs, collection_id, mod_time):
             )
         )
     resolver_data = '\n'.join(csv_lines)
+    resolver_response = requests.post(
+        RESOLVER_ENDPOINT_URL, data=resolver_data, headers={'Content-Type': 'text/csv'}
+    )
     print(resolver_data)
+    print(resolver_response)
 
 
 # .....................................................................................
