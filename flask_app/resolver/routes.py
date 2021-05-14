@@ -32,7 +32,7 @@ def resolver_endpoint():
             reader = csv.DictReader(csv_data)
             records = [Ark(record) for record in reader]
         elif content_type == 'application/json':
-            records = [Ark[record] for record in request.json]
+            records = [Ark(record) for record in request.json]
         else:
             raise UnsupportedMediaType(
                 'Cannot ingest {} records this time.'.format(content_type)
