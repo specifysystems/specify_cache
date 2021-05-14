@@ -202,7 +202,7 @@ def process_dwca_directory(in_directory, out_directory):
     """
     glob_path = os.path.join(in_directory, 'collection-*.zip')
     dwca_files = glob.glob(glob_path)
-    dwca_files.sort(key=os.path.getmtime)
+    dwca_files.sort(key=os.path.getmtime, reverse=True)
     for dwca_filename in dwca_files:
         print('Processing file: {}'.format(dwca_filename))
         # File pattern is: "collection-{collection_id}-post-YYYY_MM_DD_HH_MM_SS.zip"
@@ -210,10 +210,14 @@ def process_dwca_directory(in_directory, out_directory):
         collection_id = '-post-'.join(
             dwca_filename.split('collection-')[1].split('-post-')[:-1]
         )
-        process_dwca(dwca_filename, collection_id)
-        shutil.move(
-            dwca_filename, os.path.join(out_directory, os.path.basename(dwca_filename))
-        )
+        try:
+            process_dwca(dwca_filename, collection_id)
+            shutil.move(
+                dwca_filename,
+                os.path.join(out_directory,os.path.basename(dwca_filename))
+            )
+        except Exception as err:
+            print('Failed to process {}, {}'.format(dwca_filename, err))
 
 
 # .....................................................................................
