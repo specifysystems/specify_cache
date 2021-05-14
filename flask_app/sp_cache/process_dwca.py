@@ -56,7 +56,7 @@ def post_results(post_recs, collection_id, mod_time):
             these records.
         mod_time (tuple): A tuple of year, month, day modification time.
     """
-    controller.update_collection_occurrences(collection_id, post_recs)
+    solr_response = controller.update_collection_occurrences(collection_id, post_recs)
     resolver_recs = []
     for rec in post_recs:
         url = 'https://syftorium.org/sp_cache/collections/{}/specimens/{}'.format(
@@ -142,7 +142,7 @@ def process_occurrence_file(
         mod_time (tuple): Modification time information tuple.
     """
     for _ in range(int(my_params['num_header_rows'])):
-        print(next(occurrence_file))
+        next(occurrence_file)
     reader = csv.reader(occurrence_file, **csv_reader_params)
     solr_post_recs = []
     for row in reader:
