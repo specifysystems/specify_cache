@@ -69,7 +69,7 @@ class SpCacheCollectionTest(test_base.LmTest):
 # .....................................................................................
 class SpCacheCollectionOccurrencePostTest(test_base.LmTest):
     """Test posting data for a collection."""
-    
+
     # .............................
     def __init__(self, dwca_filename):
         """Constructor for occurrences post test.
