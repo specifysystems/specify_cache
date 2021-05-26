@@ -2,12 +2,12 @@
     ServerName @FQDN@
     # ServerName notyeti-195.lifemapper.org
     # Redirect HTTP traffic to HTTPS
-    Redirect permanent / https://@FQDN@/
+    # Redirect permanent / https://@FQDN@/
     # Redirect permanent / https://notyeti-195.lifemapper.org/
-</VirtualHost>
+# </VirtualHost>
 
-<VirtualHost *:443>
-    ServerName @FQDN@
+# <VirtualHost *:443>
+    # ServerName @FQDN@
     # ServerName notyeti-195.lifemapper.org
     # SSLEngine on
     # SSLCertificateFile @CERTFILE@
