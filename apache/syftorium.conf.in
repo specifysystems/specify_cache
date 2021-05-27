@@ -20,7 +20,7 @@
     # SSLCertificateChainFile @CHAIN_FILE@
 
     WSGIDaemonProcess syftorium threads=5
-    WSGIScriptAlias /api/v1 /var/www/syftorium/syftorium.wsgi
+    WSGIScriptAlias /api/v1 /var/www/lmsyft/syftorium.wsgi
 
     <Directory /var/www/lmsyft>
         WSGIProcessGroup syftorium
