@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schema name="spcoco" version="0.1">
-  
-   
+
+
    <!-- =========================================== -->
    <!-- Recommended fields for Solr -->
    <!-- =========================================== -->
@@ -11,20 +11,20 @@
    <!-- Specify resolver fields -->
    <!-- =========================================== -->
    <field name="dataset_guid" type="string" indexed="true" stored="true" />
-   
+
    <!-- ARK metadata -->
    <!-- similar to DC Creator, Contributor, Publisher -->
    <!-- DWC institutionCode -->
    <field name="who" type="string" indexed="true" stored="true" />
-   
+
    <!-- similar to DC Title -->
    <!-- DWC basisOfRecord -->
    <field name="what" type="string" indexed="true" stored="true" />
-   
+
    <!-- similar to DC Date -->
    <!-- DWC yyyy-mm-dd (concatenated fields) -->
    <field name="when" type="string" indexed="true" stored="true" />
-   
+
    <!-- similar to DC Identifier, optional as this is the ARK -->
    <!-- ARK pointing to Specify resolver -->
    <field name="where" type="string" indexed="true" stored="true" />
@@ -33,11 +33,11 @@
    <!-- redirection URL -->
    <!-- URL pointing to Specify API -->
    <field name="url" type="string" indexed="true" stored="true" />
-      
+
    <!-- =========================================== -->
    <!-- Recommended fields for Solr -->
    <!-- =========================================== -->
-   <uniqueKey>id</uniqueKey>   
+   <uniqueKey>id</uniqueKey>
 
    <!-- =========================================== -->
    <!-- Field types -->
@@ -49,7 +49,7 @@
    <fieldType name="multistring" class="solr.StrField" sortMissingLast="true" />
    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0" />
    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" />
-   <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" omitNorms="true" positionIncrementGap="0" />   
+   <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" omitNorms="true" positionIncrementGap="0" />
    <fieldType name="boolean" class="solr.BoolField" omitNorms="true" />
 
 </schema>

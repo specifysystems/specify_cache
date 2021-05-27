@@ -25,23 +25,29 @@ class SpCacheCollectionTest(test_base.LmTest):
 
     # .............................
     def __repr__(self):
-        """Return a string representation of this test."""
+        """Return a string representation of this test.
+
+        Returns:
+            str: A string representation of the instance.
+        """
         return self.test_name
 
     # .............................
     def run_test(self):
-        """Run the test."""
+        """Run the test.
+
+        Raises:
+            LmTestFailure: Raised if a collection exists when it shouldn't.
+        """
         collection_id = self.collection_config['collection_id']
         # Make sure that the collection doesn't exist
-        try:
-            requests.get('{}/{}'.format(self.collection_endpoint, collection_id))
-            raise ValueError(
-                'Found collection: {} when it should not exist (1)'.format(
+        req = requests.get('{}/{}'.format(self.collection_endpoint, collection_id))
+        if req.status_code != 404:
+            raise test_base.LmTestFailure(
+                'Found collection: {} when it should not exist (before_post)'.format(
                     collection_id
                 )
             )
-        except requests.NotFound:
-            pass
 
         # POST the collection
         requests.post(self.collection_endpoint, json=self.collection_config)
@@ -50,20 +56,22 @@ class SpCacheCollectionTest(test_base.LmTest):
         collection_get_response = requests.get(
             '{}/{}'.format(self.collection_endpoint, collection_id)
         )
+        if collection_get_response.status_code != 200:
+            raise test_base.LmTestFailure(
+                'Collection {} not found when expected.'.format(collection_id)
+            )
 
         # DELETE the collection
         requests.delete('{}/{}'.format(self.collection_endpoint, collection_id))
 
         # Make sure that the collection is gone again
-        try:
-            requests.get('{}/{}'.format(self.collection_endpoint, collection_id))
-            raise ValueError(
-                'Found collection: {} when it should not exist (2)'.format(
+        req = requests.get('{}/{}'.format(self.collection_endpoint, collection_id))
+        if req.status_code != 404:
+            raise test_base.LmTestFailure(
+                'Found collection: {} when it should not exist (after delete)'.format(
                     collection_id
                 )
             )
-        except requests.NotFound:
-            pass
 
 
 # .....................................................................................
@@ -87,12 +95,20 @@ class SpCacheCollectionOccurrencePostTest(test_base.LmTest):
 
     # .............................
     def __repr__(self):
-        """Return a string representation of this test."""
+        """Return a string representation of this test.
+
+        Returns:
+            str: A string representation of the instance.
+        """
         return self.test_name
 
     # .............................
     def run_test(self):
-        """Run the test."""
+        """Run the test.
+
+        Raises:
+            LmTestFailure: Raised if the data cannot be posted successfully.
+        """
         with open(self.dwca_filename, mode='rb') as dwca_file:
             data = dwca_file.read()
         resp = requests.post(self.occurrence_endpoint, data=data)

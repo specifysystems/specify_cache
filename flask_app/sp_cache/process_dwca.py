@@ -57,7 +57,7 @@ def post_results(post_recs, collection_id, mod_time):
             these records.
         mod_time (tuple): A tuple of year, month, day modification time.
     """
-    solr_response = controller.update_collection_occurrences(collection_id, post_recs)
+    _ = controller.update_collection_occurrences(collection_id, post_recs)
     resolver_recs = []
     for rec in post_recs:
         url = '{}api/v1/sp_cache/collection/{}/specimens/{}'.format(
@@ -218,7 +218,7 @@ def process_dwca_directory(in_directory, out_directory):
             process_dwca(dwca_filename, collection_id)
             shutil.move(
                 dwca_filename,
-                os.path.join(out_directory,os.path.basename(dwca_filename))
+                os.path.join(out_directory, os.path.basename(dwca_filename))
             )
         except Exception as err:
             print('Failed to process {}, {}'.format(dwca_filename, err))

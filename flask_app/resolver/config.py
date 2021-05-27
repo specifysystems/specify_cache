@@ -1,5 +1,5 @@
 """Solr configuration parameters."""
-import os
+
 
 SOLR_SERVER = 'http://localhost'
 SOLR_PORT = 8983

@@ -87,6 +87,9 @@ def collection_occurrences_modify(collection_id):
 
     Args:
         collection_id (str): An identifier associated with these specimens.
+
+    Returns:
+        tuple: Tuple of empty string and 204 indicating successful delete.
     """
     if request.method.lower() in ['post', 'put']:
         # Write data to file system for another process to pick up and handle

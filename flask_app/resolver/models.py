@@ -1,5 +1,6 @@
 """Models for Resolver."""
 
+
 # .....................................................................................
 class Ark:
     """Class containing Ark information."""
