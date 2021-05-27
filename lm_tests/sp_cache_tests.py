@@ -1,7 +1,7 @@
 """lm_test style tests for the Specify cache."""
 import requests
 
-import lm_test.base.test_base as test_base
+import lmtest.base.test_base as test_base
 
 
 # .....................................................................................
@@ -71,14 +71,14 @@ class SpCacheCollectionOccurrencePostTest(test_base.LmTest):
     """Test posting data for a collection."""
 
     # .............................
-    def __init__(self, dwca_filename):
+    def __init__(self, dwca_filename, occurrence_endpoint):
         """Constructor for occurrences post test.
 
         Args:
             dwca_filename (str): File location of DarwinCore Archive to POST.
             occurrence_endpoint (str): URL for posting occurrences.
         """
-        test_base.LmTest.__init__(self, dwca_filename, occurrence_endpoint)
+        test_base.LmTest.__init__(self)
         self.dwca_filename = dwca_filename
         self.occurrence_endpoint = occurrence_endpoint
         self.test_name = 'Specify Cache Collection Occurrence Test for {}'.format(
@@ -97,7 +97,7 @@ class SpCacheCollectionOccurrencePostTest(test_base.LmTest):
             data = dwca_file.read()
         resp = requests.post(self.occurrence_endpoint, data=data)
         if resp.status_code != 204:
-            raise test_base.LmTestError(
+            raise test_base.LmTestFailure(
                 'Occurrence data post at {} responded with code {}'.format(
                     self.occurrence_endpoint, resp.status_code
                 )
