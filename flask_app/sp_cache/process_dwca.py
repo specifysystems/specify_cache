@@ -9,7 +9,7 @@ import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
-import solr_controller as controller
+import lmsyft.flask_app.sp_cache.solr_controller as controller
 
 
 DEFAULT_META_FILENAME = 'meta.xml'

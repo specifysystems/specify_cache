@@ -2,27 +2,27 @@
     ServerName @FQDN@
     # ServerName notyeti-195.lifemapper.org
     # Redirect HTTP traffic to HTTPS
-    Redirect permanent / https://@FQDN@
+    # Redirect permanent / https://@FQDN@/
     # Redirect permanent / https://notyeti-195.lifemapper.org/
-</VirtualHost>
+# </VirtualHost>
 
-<VirtualHost *:443>
-    #ServerName @FQDN@
+# <VirtualHost *:443>
+    # ServerName @FQDN@
     # ServerName notyeti-195.lifemapper.org
-    #SSLEngine on
-    #SSLCertificateFile @CERTFILE@
+    # SSLEngine on
+    # SSLCertificateFile @CERTFILE@
     # SSLCertificateFile /etc/letsencrypt/live/notyeti-195.lifemapper.org/fullchain.pem
-    #SSLCertificateKeyFile @CERTKEYFILE@
+    # SSLCertificateKeyFile @CERTKEYFILE@
     # SSLCertificateKeyFile /etc/letsencrypt/live/notyeti-195.lifemapper.org/privkey.pem
     # Include /etc/letsencrypt/options-ssl-apache.conf
-    #Include @SSL_OPTIONS_FILE@
+    # Include @SSL_OPTIONS_FILE@
     # SSLCertificateChainFile /etc/letsencrypt/live/notyeti-195.lifemapper.org/chain.pem
-    #SSLCertificateChainFile @CHAIN_FILE@
+    # SSLCertificateChainFile @CHAIN_FILE@
 
     WSGIDaemonProcess syftorium threads=5
     WSGIScriptAlias /api/v1 /var/www/lmsyft/syftorium.wsgi
 
-    <Directory /var/www/syftorium>
+    <Directory /var/www/lmsyft>
         WSGIProcessGroup syftorium
         WSGIApplicationGroup %{GLOBAL}
         Order deny,allow

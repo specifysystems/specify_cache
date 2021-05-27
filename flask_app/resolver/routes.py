@@ -4,8 +4,8 @@ from flask import Blueprint, request
 import io
 from werkzeug.exceptions import NotFound, UnsupportedMediaType
 
-import flask_app.resolver.solr_controller as controller
-from flask_app.resolver.models import Ark
+import lmsyft.flask_app.resolver.solr_controller as controller
+from lmsyft.flask_app.resolver.models import Ark
 
 bp = Blueprint('resolve', __name__, url_prefix='/resolve')
 

@@ -1,5 +1,5 @@
 """Test Solr functions."""
-import sp_cache.solr_controller as app_solr
+import lmsyft.flask_app.sp_cache.solr_controller as app_solr
 
 
 # .....................................................................................
