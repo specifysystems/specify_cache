@@ -211,9 +211,8 @@ def process_dwca_directory(in_directory, out_directory):
         print('Processing file: {}'.format(dwca_filename))
         # File pattern is: "collection-{collection_id}-post-YYYY_MM_DD_HH_MM_SS.zip"
         # Get collection id, handle scenario where -post- is present within
-        collection_id = '-post-'.join(
-            dwca_filename.split('collection-')[1].split('-post-')[:-1]
-        )
+        # Start after "collection-"
+        collection_id = os.path.basename(dwca_filename)[11:].split('-post-')[0]
         try:
             process_dwca(dwca_filename, collection_id)
             shutil.move(
