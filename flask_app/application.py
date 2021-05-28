@@ -4,8 +4,8 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
-import flask_app.sp_cache.routes as sp_cache_routes
-import flask_app.resolver.routes as resolver_routes
+import lmsyft.flask_app.sp_cache.routes as sp_cache_routes
+import lmsyft.flask_app.resolver.routes as resolver_routes
 
 
 # .....................................................................................
