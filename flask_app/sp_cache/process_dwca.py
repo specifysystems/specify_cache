@@ -25,7 +25,8 @@ MY_PARAMS = [
     ('num_header_rows', 'ignoreHeaderLines'),
     ('row_type', 'rowType'),
 ]
-SERVER_URL = 'https://notyeti-195.lifemapper.org/'
+# SERVER_URL = 'https://dev.syftorium.org/'
+SERVER_URL = 'https://syftorium.org/'
 RESOLVER_ENDPOINT_URL = '{}api/v1/resolve'.format(SERVER_URL)
 SOLR_POST_LIMIT = 1000
 # Valid fields for identifier in reverse preference order (best option last)
@@ -160,7 +161,8 @@ def process_occurrence_file(
                 pop_keys.append(k)
         for k in pop_keys:
             rec.pop(k)
-        solr_post_recs.append(rec)
+        if validate_rec(rec):
+            solr_post_recs.append(rec)
         if len(solr_post_recs) >= SOLR_POST_LIMIT:
             post_results(solr_post_recs, collection_id, mod_time)
             solr_post_recs = []
@@ -221,6 +223,19 @@ def process_dwca_directory(in_directory, out_directory):
             )
         except Exception as err:
             print('Failed to process {}, {}'.format(dwca_filename, err))
+
+
+# .....................................................................................
+def validate_rec(rec):
+    """Validate a record before adding to solr.
+
+    Args:
+        rec (dict): A record to post.
+
+    Returns:
+        bool: An indication if the record is valid.
+    """
+    return True
 
 
 # .....................................................................................
