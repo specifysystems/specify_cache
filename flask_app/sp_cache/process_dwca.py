@@ -61,7 +61,7 @@ def post_results(post_recs, collection_id, mod_time):
     _ = controller.update_collection_occurrences(collection_id, post_recs)
     resolver_recs = []
     for rec in post_recs:
-        url = '{}api/v1/sp_cache/collection/{}/specimens/{}'.format(
+        url = '{}api/v1/sp_cache/collection/{}/occurrences/{}'.format(
             SERVER_URL, collection_id, rec['id']
         )
         resolver_recs.append(
