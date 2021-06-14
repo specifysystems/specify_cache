@@ -27,6 +27,12 @@ MY_PARAMS = [
     ('num_header_rows', 'ignoreHeaderLines'),
     ('row_type', 'rowType'),
 ]
+VALIDATE_KEYS = {
+    'latitude': float,
+    'decimallatitude': float,
+    'longitude': float,
+    'decimallongitude': float
+}
 
 SERVER_URL = FQDN
 RESOLVER_ENDPOINT_URL = '{}api/v1/resolve'.format(SERVER_URL)
@@ -237,7 +243,14 @@ def validate_rec(rec):
     Returns:
         bool: An indication if the record is valid.
     """
-    return True
+    try:
+        for k in rec.keys():
+            # If we have a validate method for a key, try it
+            if k.lower() in VALIDATE_KEYS:
+                VALIDATE_KEYS[k.lower()](rec[k])
+        return True
+    except ValueError:
+        return False
 
 
 # .....................................................................................
