@@ -1,7 +1,7 @@
 """Solr configuration parameters."""
 import os
 
-from lmsyft.flask_app.config.constants import BACKUP_DATA_PATH, SOLR_PORT, SOLR_SERVER
+from lmsyft.config.constants import BACKUP_DATA_PATH, SOLR_PORT, SOLR_SERVER
 
 
 COLLECTIONS_URL = '{}:{}/solr/sp_collections'.format(SOLR_SERVER, SOLR_PORT)

@@ -9,7 +9,7 @@ import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
-from lmsyft.flask_app.config.constants import FQDN
+from lmsyft.config.constants import FQDN
 import lmsyft.flask_app.sp_cache.solr_controller as controller
 import lmsyft.flask_app.sp_cache.config as config
 
