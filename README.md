@@ -16,3 +16,10 @@ knowlege and redundancies for similar motivations.  The Syftorium presents this
 information in multivariate-, but subsettable, space in order to create the most
 compelling picture of the data as possible in order to provide as much value and
 feedback to the community as we can. 
+
+## Using the Syftorium
+
+Syftorium web services are documented using the
+[Open API 3 spec](https://swagger.io/specification/).  The raw documentation can be
+found at [/docs/openapi.yml](/docs/openapi.yml) and a version rendered with Swagger can
+be found at https://lifemapper.github.io/lmsyft/.
