@@ -9,7 +9,9 @@ import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
+from lmsyft.flask_app.config.constants import FQDN
 import lmsyft.flask_app.sp_cache.solr_controller as controller
+import lmsyft.flask_app.sp_cache.config as config
 
 
 DEFAULT_META_FILENAME = 'meta.xml'
@@ -25,8 +27,8 @@ MY_PARAMS = [
     ('num_header_rows', 'ignoreHeaderLines'),
     ('row_type', 'rowType'),
 ]
-# SERVER_URL = 'https://dev.syftorium.org/'
-SERVER_URL = 'https://syftorium.org/'
+
+SERVER_URL = FQDN
 RESOLVER_ENDPOINT_URL = '{}api/v1/resolve'.format(SERVER_URL)
 SOLR_POST_LIMIT = 1000
 # Valid fields for identifier in reverse preference order (best option last)
@@ -241,13 +243,7 @@ def validate_rec(rec):
 # .....................................................................................
 def main():
     """Main method for script."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        'in_dwca_directory', type=str, help='Directory if incoming DWCA files.')
-    parser.add_argument(
-        'out_dwca_directory', type=str, help='Directory if processed DWCA files.')
-    args = parser.parse_args()
-    process_dwca_directory(args.in_dwca_directory, args.out_dwca_directory)
+    process_dwca_directory(config.DWCA_PATH, config.PROCESSED_DWCA_PATH)
 
 
 # .....................................................................................
