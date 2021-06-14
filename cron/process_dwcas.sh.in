@@ -1,6 +1,4 @@
 PYTHON_EXE = "python"
 SCRIPT_NAME = "/opt/lifemapper/lmsyft/flask_app/sp_cache/process_dwca.py"
-IN_DIR = "/state/partition1/lmlab/syftorium_data/new_dwcas/"
-OUT_DIR = "/state/partition1/lmlab/syftorium_data/processed_dwcas/"
 
-${PYTHON_EXE} {SCRIPT_NAME} {IN_DIR} {OUT_DIR}
+${PYTHON_EXE} {SCRIPT_NAME}
