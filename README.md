@@ -1,6 +1,7 @@
 # lmsyft
 
 ![Logo](/apache/syftorium.png)
+
 Welcome to the Syftorium!
 
 The Syftorium is a collection of specimen-based analytics assessing the composition of
