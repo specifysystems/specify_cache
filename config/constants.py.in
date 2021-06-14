@@ -1,0 +1,8 @@
+"""Machine-specific configuration constants."""
+
+SOLR_SERVER = 'http://localhost'
+SOLR_PORT = @SOLR_PORT@
+
+BACKUP_DATA_PATH = '@LMLABDISK@/syftorium_data'
+
+FQDN = '@FQDN@'
