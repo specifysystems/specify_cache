@@ -1,7 +1,4 @@
 """Solr configuration parameters."""
-
-
-SOLR_SERVER = 'http://localhost'
-SOLR_PORT = 8983
+from lmsyft.flask_app.config.constants import SOLR_PORT, SOLR_SERVER
 
 RESOLVER_URL = '{}:{}/solr/spcoco'.format(SOLR_SERVER, SOLR_PORT)
