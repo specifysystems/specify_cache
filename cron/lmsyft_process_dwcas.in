@@ -13,7 +13,6 @@ PATH=/bin:/usr/bin:/usr/local/bin
 # Variables defined on roll build
 PYTHON_EXE=@PYTHON36@
 SCRIPT_NAME=@LMHOME@/lmsyft/flask_app/sp_cache/process_dwca.py
-DATA_DIR=@LMLABDISK@/syftorium_data
 
 # load opt-python
 source /usr/share/Modules/init/bash
@@ -25,4 +24,4 @@ module load opt-python
 # touch $LOG
 
 
-${PYTHON_EXE} ${SCRIPT_NAME} $DATA_DIR/new_dwcas  $DATA_DIR/processed_dwcas
+${PYTHON_EXE} ${SCRIPT_NAME}
