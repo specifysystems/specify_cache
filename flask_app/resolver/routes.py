@@ -2,6 +2,7 @@
 import csv
 from flask import Blueprint, request
 import io
+import json
 from werkzeug.exceptions import NotFound, UnsupportedMediaType
 
 import lmsyft.flask_app.resolver.solr_controller as controller
@@ -39,7 +40,7 @@ def resolver_endpoint():
                 'Cannot ingest {} records this time.'.format(content_type)
             )
         controller.post_identifiers(records)
-        return ('{"pattern": "{}"}'.format(ARK_PATTERN), 204)
+        return (json.dumps({'pattern': ARK_PATTERN}), 204)
 
 
 # .....................................................................................
