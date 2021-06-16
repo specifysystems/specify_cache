@@ -75,11 +75,10 @@ def post_results(post_recs, collection_id, mod_time):
         resolver_recs.append(
             {
                 'id': rec['occurrenceID'],
-                'dataset_guid': rec['datasetName'],
+                'dataset_guid': collection_id,
                 'who': rec['collectionCode'],
                 'what': rec['basisOfRecord'],
                 'when': '{}-{}-{}'.format(*mod_time),
-                'where': rec['institutionCode'],
                 'url': url
             }
         )

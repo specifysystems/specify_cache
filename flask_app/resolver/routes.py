@@ -5,6 +5,7 @@ import io
 from werkzeug.exceptions import NotFound, UnsupportedMediaType
 
 import lmsyft.flask_app.resolver.solr_controller as controller
+from lmsyft.flask_app.resolver.config import ARK_PATTERN
 from lmsyft.flask_app.resolver.models import Ark
 
 bp = Blueprint('resolve', __name__, url_prefix='/resolve')
@@ -38,7 +39,7 @@ def resolver_endpoint():
                 'Cannot ingest {} records this time.'.format(content_type)
             )
         controller.post_identifiers(records)
-        return ('', 204)
+        return ('{"pattern": "{}"}'.format(ARK_PATTERN), 204)
 
 
 # .....................................................................................

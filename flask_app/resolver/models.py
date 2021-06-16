@@ -1,4 +1,5 @@
 """Models for Resolver."""
+from lmsyft.flask_app.resolver.config import ARK_PATTERN
 
 
 # .....................................................................................
@@ -12,6 +13,7 @@ class Ark:
             attribute_dict (dict): A dictionary of attribute keys and value values.
         """
         self.attributes = attribute_dict
+        self.attributes['where'] = ARK_PATTERN.replace('<guid>', self.attributes['id'])
 
     # ............................
     def serialize_json(self):
