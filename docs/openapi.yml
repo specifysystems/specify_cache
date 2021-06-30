@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Syftorium API
-  version: 1.0.0.beta
+  version: 1.1.0.beta
   description: API Specification for Syftorium Server Interactions
   contact:
     email: cjgrady@ku.edu
@@ -317,8 +317,649 @@ paths:
         required: true
         schema:
           type: string
-#  /syftorium:
-#    summary: Endpoint for Syftorium services
+
+  /syft:
+    summary: Metadata endpoint describing Syftorium holdings
+    get:
+      responses:
+        200:
+          description: Overall Syftorium metadata
+          content:
+            application/json:
+              schema:
+                properties:
+                  collections:
+                    type: integer
+                  species:
+                    type: integer
+                  specimens:
+                    type: integer
+      tags:
+        - metadata
+
+  /syft/collections:
+    summary: Metadata endpoint for Syftorium collection holdings
+    get:
+      responses:
+        200:
+          description: Simple metadata about Syftorium collections
+          content:
+            application/json:
+              schema:
+                properties:
+                  collections:
+                    type: integer
+      tags:
+        - collection
+        - metadata
+
+  /syft/collections/{collection_id}:
+    summary: Base endpoint for collection information in the Syftorium
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Top level collection metadata
+          content:
+            application/json:
+              schema:
+                properties:
+                  collection_id:
+                    type: string
+                  name:
+                    type: string
+                  metrics:
+                    type: object
+                    properties:
+                      num_specimens:
+                        type: integer
+                      num_taxa:
+                        type: integer
+                      phylogenetic_diversity:
+                        type: number
+                        description: A metric measuring how closely related the taxa are in this collection
+                      mean_nearest_taxon_distance:
+                        type: number
+                        description: A metric measuring how closely related the taxa are in this collection
+                      mean_pairwise_distance:
+                        type: number
+                        description: A metric measuring how closely related the taxa are in this collection
+                      range_size:
+                        description: The number of unique sites where this collection has specimens
+                        type: integer
+      tags:
+        - collection
+        - metadata
+        - syftorium
+
+  /syftorium/collections/{collection_id}/maps:
+    summary: Endpoint describing maps available for the collection
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: service
+          required: true
+          schema:
+            type: string
+            enum: ["wms"]
+            default: "wms"
+        - in: query
+          name: version
+          required: true
+          schema:
+            type: string
+            enum: ["1.3.0"]
+            default: "1.3.0"
+        - in: query
+          name: request
+          required: true
+          schema:
+            type: string
+            enum: ["getcapabilities", "getmap"]
+        - in: query
+          name: layers
+          schema:
+            type: string
+        - in: query
+          name: styles
+          schema:
+            type: string
+        - in: query
+          name: crs
+          schema:
+            type: string
+        - in: query
+          name: bbox
+          schema:
+            type: string
+        - in: query
+          name: width
+          schema:
+            type: integer
+        - in: query
+          name: height
+          schema:
+            type: integer
+        - in: query
+          name: format
+          schema:
+            type: string
+        - in: query
+          name: bgcolor
+          schema:
+            type: string
+        - in: query
+          name: transparent
+          schema:
+            type: string
+            enum: ["true", "false"]
+          required: false
+        - in: query
+          name: exceptions
+          schema:
+            type: string
+          
+      responses:
+        200:
+          description: Map type listings
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  WMS_Capabilities:
+                    type: object
+                    properties:
+                      version:
+                        type: string
+                        xml:
+                          attribute: true
+                      schemaLocation:
+                        type: string
+                        xml:
+                          attribute: true
+                      Service:
+                        type: object
+                        properties:
+                          Name:
+                            type: string
+                            default: WMS
+                          Title:
+                            type: string
+                          Abstract:
+                            type: string
+                          KeywordList:
+                            type: array
+                            items:
+                              type: string
+                          OnlineResource:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                xml:
+                                  attribute: true
+                              href:
+                                type: string
+                                xml:
+                                  attribute: true
+            image/*:
+              schema:
+                type: string
+                format: binary
+      tags:
+        - collection
+        - map
+        - ogc
+
+  /syftorium/collections/{collection_id}/plots:
+    summary: Metadata endpoint describing the plot options for a collection
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Plot type listings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    plot_type:
+                      type: string
+                    description:
+                      type: string
+      tags:
+        - collection
+        - plot
+        - metadata
+
+  /syftorium/collections/{collection_id}/plots/climate:
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Collection climate space distribution plots
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  layers:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        description:
+                          type: string
+      tags:
+        - collection
+        - plot
+        - climate
+
+  /syftorium/collections/{collection_id}/plots/climate/{climate_layer_1}:
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: climate_layer_1
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Collection climate space histogram for climate variable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  variable:
+                    type: string
+                  y_label:
+                    type: string
+                  x_label:
+                    type: string
+                  bins:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        bin_min:
+                          type: number
+                        bin_max:
+                          type: number
+                        count:
+                          type: integer
+            image/*:
+              schema:
+                type: string
+                format: binary
+      tags:
+        - collection
+        - plot
+        - climate
+
+  /syftorium/collections/{collection_id}/plots/climate/{climate_layer_1}/{climate_layer_2}:
+    get:
+      parameters:
+        - in: path
+          name: collection_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: climate_layer_1
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: climate_layer_2
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Collection climate space scatter plot for two variables
+      tags:
+        - collection
+        - plot
+        - climate
+  /syftorium/rankings:
+    summary: Endpoint for rankings information
+    get:
+      responses:
+        200:
+          description: Available statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    statistic:
+                      type: string
+                    description:
+                      type: string
+      tags:
+        - collection
+        - ranking
+        - metadata
+  /syftorium/rankings/{statistic}:
+    summary: Get collection rankings for a statistic
+    get:
+      parameters:
+        - in: path
+          name: statistic
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ranks
+          content:
+            application/json:
+              schema:
+                properties:
+                  statistic:
+                    type: string
+                  description:
+                    type: string
+                  ranks:
+                    type: array
+                    items:
+                      properties:
+                        collection_id:
+                          type: string
+                        collection_name:
+                          type: string
+      tags:
+        - collection
+        - ranking
+
+  /syftorium/species:
+    summary: Metadata about species endpoint
+    get:
+      responses:
+        200:
+          description: Metadata about species holdings in the Syftorium
+  /syftorium/species/{species_name}:
+    summary: Metadata about a species
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    type: integer
+                  
+  /syftorium/species/{species_name}/maps:
+    summary: Metadata about a species
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+          content:
+            application/json:
+              schema:
+                properties:
+                  count:
+                    type: integer
+                  
+  /syftorium/species/{species_name}/plots:
+    summary: Metadata about a species
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+
+  /syftorium/species/{species_name}/plots/climate:
+    summary: Metadata about a species climate plots
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+
+  /syftorium/species/{species_name}/plots/climate/{climate_layer_1}:
+    summary: Metadata about a species climate plots
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: climate_layer_1
+          required: true
+          schema:
+            type: string
+        - in: query
+          description: Highlight specimen points for this collection
+          name: collection_id
+          required: false
+          schema:
+            type: string
+        - in: query
+          description: Highlight this particular specimen guid
+          name: guid
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+
+  /syftorium/species/{species_name}/plots/climate/{climate_layer_1}/{climate_layer_2}:
+    summary: Metadata about a species climate plots
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: climate_layer_1
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: climate_layer_2
+          required: true
+          schema:
+            type: string
+        - in: query
+          description: Highlight specimen points for this collection
+          name: collection_id
+          required: false
+          schema:
+            type: string
+        - in: query
+          description: Highlight this particular specimen guid
+          name: guid
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Metadata about a specific species
+          content:
+            application/json:
+              schema:
+                required: [title, x_axis, y_axis, values]
+                properties:
+                  title:
+                    type: string
+                  x_axis:
+                    type: string
+                  y_axis:
+                    type: string
+                  values:
+                    type: array
+                    items:
+                      properties:
+                        x_val:
+                          type: number
+                        y_val:
+                          type: number
+                  highlight_values:
+                    type: array
+                    items:
+                      properties:
+                        x_val:
+                          type: number
+                        y_val:
+                          type: number
+                  guid_value:
+                    type: object
+                    properties:
+                      x_val:
+                        type: number
+                      y_val:
+                        type: number
+            image/*:
+              schema:
+                type: string
+                format: binary
+
+
+  /syftorium/species/{species_name}/rankings:
+    summary: Metadata about a species
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List available rankings metrics
+
+  /syftorium/species/{species_name}/rankings/{statistic}:
+    summary: Metadata about a species
+    get:
+      parameters:
+        - in: path
+          name: species_name
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: statistic
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: List available rankings metrics
+
+  /syftorium/specimens:
+    summary: Specimen holdings endpoint
+    get:
+      responses:
+        200:
+          description: Metadata about the specimen holdings in the Syftorium
+      tags:
+        - specimen
+        - metadata
+
+  /syftorium/specimens/{specimen_guid}:
+    summary: Endpoint for specimen assessment
+    get:
+      parameters:
+        - in: path
+          name: specimen_guid
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Analysis information about a specimen
+          content:
+            application/json:
+              schema:
+                properties:
+                  guid:
+                    type: string
+                  collection_id:
+                    type: string
+                  species_name:
+                    type: string
+                  latitude:
+                    type: number
+                  longitude:
+                    type: number
+                  climate_values:
+                    type: array
+                    items:
+                      properties:
+                        variable:
+                          type: string
+                        value:
+                          type: number
+                        z_score:
+                          type: number
+                  mahalanobis:
+                    type: number
+      tags:
+        - specimen
+
 components:
   securitySchemes:
     ApiKeyAuth:
