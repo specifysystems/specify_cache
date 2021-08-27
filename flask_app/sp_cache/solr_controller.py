@@ -112,7 +112,7 @@ def delete_collection_occurrences(collection_id, identifiers):
     sp_solr.delete(
         q=[
             'collection_id:{}'.format(collection_id),
-            'identiifer:{}'.format(identifiers)
+            'identifier:{}'.format(identifiers)
         ]
     )
 
@@ -130,10 +130,8 @@ def get_specimen(collection_id, identifier):
     """
     sp_solr = get_specimen_solr()
     rec = sp_solr.search(
-        q=[
-            'collection_id:{}'.format(collection_id),
-            'identiifer:{}'.format(identifier)
-        ]
+        'identifier:{}'.format(identifier),
+        fq='collection_id:{}'.format(collection_id)
     )
     if rec.hits > 0:
         return SpecimenRecord(rec.docs[0])
