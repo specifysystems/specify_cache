@@ -14,6 +14,7 @@
     <field name="country" type="string" indexed="true" stored="true" />
     <field name="county" type="string" indexed="true" stored="true" />
     <field name="datasetName" type="string" indexed="true" stored="true" />
+    <field name="day" type="int" indexed="true" stored="true" />
     <field name="decimalLatitude" type="float" indexed="true" stored="true" />
     <field name="decimalLongitude" type="float" indexed="true" stored="true" />
     <field name="eventDate" type="string" indexed="true" stored="true" />
@@ -29,6 +30,7 @@
     <field name="license" type="string" indexed="true" stored="true" />
     <field name="locality" type="string" indexed="true" stored="true" />
     <field name="modified" type="string" indexed="true" stored="true" />
+    <field name="month" type="int" indexed="true" stored="true" />
     <field name="occurrenceID" type="string" indexed="true" stored="true" />
     <field name="order" type="string" indexed="true" stored="true" />
     <field name="phylum" type="string" indexed="true" stored="true" />
@@ -39,6 +41,7 @@
     <field name="scientificNameAuthorship" type="string" indexed="true" stored="true" />
     <field name="specificepithet" type="string" indexed="true" stored="true" />
     <field name="stateprovince" type="string" indexed="true" stored="true" />
+    <field name="year" type="int" indexed="true" stored="true" />
     <field name="waterbody" type="string" indexed="true" stored="true" />
 
     <!-- Extra specify field -->
@@ -50,4 +53,5 @@
 	<fieldType name="string" class="solr.StrField" sortMissingLast="true" />
 	<fieldType name="float" class="solr.FloatPointField" />
     <fieldType name="long" class="solr.LongPointField" />
+    <fieldType name="int" class="solr.IntPointField" />
 </schema>
