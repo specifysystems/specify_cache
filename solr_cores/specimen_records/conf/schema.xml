@@ -14,8 +14,8 @@
     <field name="country" type="string" indexed="true" stored="true" />
     <field name="county" type="string" indexed="true" stored="true" />
     <field name="datasetName" type="string" indexed="true" stored="true" />
-    <field name="decimallatitude" type="float" indexed="true" stored="true" />
-    <field name="decimallongitude" type="float" indexed="true" stored="true" />
+    <field name="decimalLatitude" type="float" indexed="true" stored="true" />
+    <field name="decimalLongitude" type="float" indexed="true" stored="true" />
     <field name="eventDate" type="string" indexed="true" stored="true" />
     <field name="family" type="string" indexed="true" stored="true" />
     <field name="fieldnumber" type="string" indexed="true" stored="true" />
