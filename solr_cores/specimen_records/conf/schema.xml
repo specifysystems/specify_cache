@@ -40,7 +40,7 @@
     <field name="scientificName" type="string" indexed="true" stored="true" />
     <field name="scientificNameAuthorship" type="string" indexed="true" stored="true" />
     <field name="specificepithet" type="string" indexed="true" stored="true" />
-    <field name="stateprovince" type="string" indexed="true" stored="true" />
+    <field name="stateProvince" type="string" indexed="true" stored="true" />
     <field name="year" type="int" indexed="true" stored="true" />
     <field name="waterbody" type="string" indexed="true" stored="true" />
 
