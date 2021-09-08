@@ -22,8 +22,8 @@
     <field name="fieldnumber" type="string" indexed="true" stored="true" />
     <field name="genus" type="string" indexed="true" stored="true" />
     <field name="geodeticDatum" type="string" indexed="true" stored="true" />
-    <field name="globaluniqueidentifier" type="string" indexed="true" stored="true" />
-    <field name="highergeography" type="string" indexed="true" stored="true" />
+    <field name="globalUniqueIdentifier" type="string" indexed="true" stored="true" />
+    <field name="higherGeography" type="string" indexed="true" stored="true" />
     <field name="institutionCode" type="string" indexed="true" stored="true" />
     <field name="institutionID" type="string" indexed="true" stored="true" />
     <field name="kingdom" type="string" indexed="true" stored="true" />
@@ -39,7 +39,7 @@
     <field name="rights" type="string" indexed="true" stored="true" />
     <field name="scientificName" type="string" indexed="true" stored="true" />
     <field name="scientificNameAuthorship" type="string" indexed="true" stored="true" />
-    <field name="specificepithet" type="string" indexed="true" stored="true" />
+    <field name="specificEpithet" type="string" indexed="true" stored="true" />
     <field name="stateProvince" type="string" indexed="true" stored="true" />
     <field name="year" type="int" indexed="true" stored="true" />
     <field name="waterbody" type="string" indexed="true" stored="true" />
