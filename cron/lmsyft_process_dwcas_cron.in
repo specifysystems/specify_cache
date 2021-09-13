@@ -1,0 +1,2 @@
+# Run specify_cache dwca processing tool every 10 minutes
+*/10 * * * * root @LMHOME@/rocks/bin/lmsyft_process_dwcas
