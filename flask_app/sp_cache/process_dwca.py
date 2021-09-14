@@ -54,6 +54,47 @@ def get_full_tag(tag, namespace=TARGET_NAMESPACE):
     """
     return '{}{}'.format(namespace, tag)
 
+# .....................................................................................
+def _get_value(rec, key):
+    try:
+        val = rec[key]
+    except:
+        val = None
+    return val 
+
+# .....................................................................................
+def post_results(post_recs, collection_id, mod_time):
+    """Post results to Solr index and resolver.
+
+    Args:
+        post_recs (list of dict): A list of dictionaries representing records to post
+            to solr.
+        collection_id (str): An identifier associated with the collection containing
+            these records.
+        mod_time (tuple): A tuple of year, month, day modification time.
+    """
+    _ = controller.update_collection_occurrences(collection_id, post_recs)
+    resolver_recs = []
+    for rec in post_recs:
+        url = '{}api/v1/sp_cache/collection/{}/occurrences/{}'.format(
+            SERVER_URL, collection_id, rec['id']
+        )
+        occid = _get_value(rec, 'occurrenceID')
+        coll_code = _get_value(rec, 'collectionCode')
+        basis_rec = _get_value(rec, 'basisOfRecord')
+        
+        resolver_recs.append(
+            {
+                'id': occid,
+                'dataset_guid': collection_id,
+                'who': coll_code,
+                'what': basis_rec,
+                'when': '{}-{}-{}'.format(*mod_time),
+                'url': url
+            }
+        )
+    resolver_response = requests.post(RESOLVER_ENDPOINT_URL, json=resolver_recs)
+    print(resolver_response)
 
 # .....................................................................................
 def post_results(post_recs, collection_id, mod_time):
