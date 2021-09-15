@@ -211,12 +211,13 @@ def process_dwca(dwca_filename, collection_id, meta_filename=DEFAULT_META_FILENA
 
 
 # .....................................................................................
-def process_dwca_directory(in_directory, out_directory):
+def process_dwca_directory(in_directory, out_directory, error_directory):
     """Process the Darwin Core Archive files in the input directory and move them.
 
     Args:
         in_directory (str): A directory of Darwin Core Archive files to ingest.
         out_directory (str): A directory to store processed DwCA files.
+        error_directory (str): A directory to store problem DWCA files.
     """
     glob_path = os.path.join(in_directory, 'collection-*.zip')
     dwca_files = glob.glob(glob_path)
@@ -235,6 +236,9 @@ def process_dwca_directory(in_directory, out_directory):
             )
         except Exception as err:
             print('Failed to process {}, {}'.format(dwca_filename, err))
+            shutil.move(
+                dwca_filename,
+                os.path.join(error_directory, os.path.basename(dwca_filename))
 
 
 # .....................................................................................
@@ -260,7 +264,11 @@ def validate_rec(rec):
 # .....................................................................................
 def main():
     """Main method for script."""
-    process_dwca_directory(config.DWCA_PATH, config.PROCESSED_DWCA_PATH)
+    process_dwca_directory(
+        config.DWCA_PATH,
+        config.PROCESSED_DWCA_PATH,
+        config.ERROR_DWCA_PATH
+    )
 
 
 # .....................................................................................
