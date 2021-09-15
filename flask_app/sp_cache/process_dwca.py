@@ -239,6 +239,7 @@ def process_dwca_directory(in_directory, out_directory, error_directory):
             shutil.move(
                 dwca_filename,
                 os.path.join(error_directory, os.path.basename(dwca_filename))
+            )
 
 
 # .....................................................................................
