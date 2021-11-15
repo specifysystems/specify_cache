@@ -1,5 +1,4 @@
 """Process a Darwin Core Archive and add the data to the Specify Cache."""
-import argparse
 import csv
 import glob
 import io
@@ -9,9 +8,8 @@ import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
-from lmsyft.config.constants import FQDN
-import lmsyft.flask_app.sp_cache.solr_controller as controller
-import lmsyft.flask_app.sp_cache.config as config
+import flask_app.sp_cache.solr_controller as controller
+import flask_app.sp_cache.config as config
 
 
 DEFAULT_META_FILENAME = 'meta.xml'
