@@ -34,7 +34,7 @@ VALIDATE_KEYS = {
     'decimallongitude': float
 }
 
-SERVER_URL = FQDN
+SERVER_URL = os.environ['FQDN']
 RESOLVER_ENDPOINT_URL = '{}/api/v1/resolve'.format(SERVER_URL)
 SOLR_POST_LIMIT = 1000
 # Valid fields for identifier in reverse preference order (best option last)
