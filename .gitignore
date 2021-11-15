@@ -132,3 +132,7 @@ dmypy.json
 # PyDev
 .project
 .pydevproject
+
+# Development
+config/fullchain.pem
+config/privkey.pem
