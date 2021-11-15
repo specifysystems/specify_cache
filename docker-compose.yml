@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  flask:
+    build:
+      context: ./.
+      target: flask
+    networks:
+      - solr
+      - nginx
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=flask_app.application
+      - SOLR_SERVER=http://solr
+      - SOLR_PORT=8983
+      - SECRET_KEY=dev
+      - FQDN=localhost
+      - WORKING_DIRECTORY=scratch-path
+    restart: unless-stopped
+    volumes:
+      - "scratch-path:/scratch-path"
+
+  solr:
+    image: solr:8.10.1-slim
+    networks:
+      - solr
+    # See https://github.com/docker-solr/docker-solr/issues/273
+    environment:
+      - SOLR_OPTS=-XX:-UseLargePages
+    # See https://github.com/docker-solr/docker-solr/issues/188
+    entrypoint:
+      - bash
+      - "-c"
+      - "precreate-core sp_collections /opt/solr/server/solr/sp_collections/conf; precreate-core spcoco /opt/solr/server/solr/spcoco/conf; precreate-core specimen_records /opt/solr/server/solr/specimen_records/conf; exec solr -f"
+    volumes:
+      - './solr_cores/:/opt/solr/server/solr'
+      - 'solr:/var/solr'
+
+  nginx:
+    image: nginx:1.21.3-alpine
+    restart: unless-stopped
+    depends_on:
+      - flask
+    networks:
+      - nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./config/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro"
+      - "./config/fullchain.pem:/etc/letsencrypt/fullchain.pem:ro"
+      - "./config/privkey.pem:/etc/letsencrypt/privkey.pem:ro"
+
+volumes:
+  scratch-path:
+  solr:
+
+networks:
+  solr:
+  nginx:
