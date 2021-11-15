@@ -1,6 +1,6 @@
 # lmsyft
 
-![Logo](/apache/syftorium.png)
+![Logo](./apache/syftorium.png)
 
 Welcome to the Syftorium!
 
@@ -23,3 +23,45 @@ Syftorium web services are documented using the
 [Open API 3 spec](https://swagger.io/specification/).  The raw documentation can be
 found at [/docs/openapi.yml](/docs/openapi.yml) and a version rendered with Swagger can
 be found at https://lifemapper.github.io/lmsyft/.
+
+## Deployment
+
+To run the containers, generate `fullchain.pem` and `privkey.pem` (certificate
+and the private key) using Let's Encrypt and put these files into the
+`./lmtrex/config/` directory.
+
+While in development, you can generate self-signed certificates:
+
+```zsh
+openssl req \
+  -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
+  -keyout ./config/privkey.pem \
+  -out ./config/fullchain.pem
+```
+
+To run the production container, or the development container with HTTPs
+support, generate `fullchain.pem` and `privkey.pem` (certificate and the private
+key) using Let's Encrypt and put these files into the `./config/`
+directory.
+
+### Production
+
+Run the containers:
+
+```zsh
+docker compose up -d
+```
+
+lmsyft is now available at [https://localhost/](https://localhost:443)
+
+### Development
+
+Run the containers:
+
+```zsh
+docker compose -f docker-compose.yml -f docker-compose.development.yml up
+```
+
+lmsyft is now available at [http://localhost/](http://localhost:443).
+
+Flask has hot-reload enabled.
