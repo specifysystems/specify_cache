@@ -23,5 +23,5 @@ RUN python -m venv venv \
  && venv/bin/pip install --no-cache-dir -r ./requirements.txt
 
 COPY --chown=lifemapper:lifemapper ./flask_app ./flask_app
-#CMD ["tail", "-f", "/dev/null"]
-CMD ["./venv/bin/python", "-m", "flask", "run", "--host=0.0.0.0"]
+ENV FLASK_ENV=production
+CMD venv/bin/python -m gunicorn -w 4 --bind 0.0.0.0:5000 ${FLASK_APP}
