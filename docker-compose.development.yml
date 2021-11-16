@@ -23,3 +23,7 @@ services:
       ./.env.conf
     volumes:
       - "./flask_app/:/home/lifemapper/flask_app/"
+
+  solr:
+    ports:
+      - "8983:8983"
