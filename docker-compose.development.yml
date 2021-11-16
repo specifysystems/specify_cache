@@ -1,8 +1,25 @@
 version: "3.9"
 services:
-  flask:
+  runner:
+    build:
+      context: ./.
+      target: dev-flask
     environment:
-      - FLASK_ENV=development
+      - FLASK_APP=flask_app.resolver:app
+      - FLASK_MANAGE=flask_app.resolver.manage
+    env_file:
+      ./.env.conf
     volumes:
-      - "scratch-path:/scratch-path"
+      - "./flask_app/:/home/lifemapper/flask_app/"
+
+  sp_cache:
+    build:
+      context: ./.
+      target: dev-flask
+    environment:
+      - FLASK_APP=flask_app.sp_cache:app
+      - FLASK_MANAGE=flask_app.sp_cache.manage
+    env_file:
+      ./.env.conf
+    volumes:
       - "./flask_app/:/home/lifemapper/flask_app/"

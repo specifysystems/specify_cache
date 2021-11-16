@@ -25,3 +25,10 @@ RUN python -m venv venv \
 COPY --chown=lifemapper:lifemapper ./flask_app ./flask_app
 ENV FLASK_ENV=production
 CMD venv/bin/python -m gunicorn -w 4 --bind 0.0.0.0:5000 ${FLASK_APP}
+
+
+
+FROM flask as dev-flask
+
+ENV FLASK_ENV=development
+CMD venv/bin/python -m ${FLASK_MANAGE} run --host=0.0.0.0
