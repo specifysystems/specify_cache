@@ -1,6 +1,6 @@
 # lmsyft
 
-![Logo](./apache/syftorium.png)
+![Logo](static/syftorium.png)
 
 Welcome to the Syftorium!
 
@@ -15,7 +15,7 @@ information can also be used by the community as a whole to identify gaps in spe
 knowlege and redundancies for similar motivations.  The Syftorium presents this
 information in multivariate-, but subsettable, space in order to create the most
 compelling picture of the data as possible in order to provide as much value and
-feedback to the community as we can. 
+feedback to the community as we can.
 
 ## Using the Syftorium
 
@@ -46,6 +46,8 @@ directory.
 
 ### Production
 
+Modify the `FQDN` environment variable in `.env.conf` as needed.
+
 Run the containers:
 
 ```zsh
@@ -53,6 +55,15 @@ docker compose up -d
 ```
 
 lmsyft is now available at [https://localhost/](https://localhost:443)
+
+#### Process DWCAs
+
+You can setup a cron job to process pending DWCAs.
+
+See `./cron/lmsyft_process_dwcas_cron.in`.
+
+Note, you many need to modify `lmsyft-sp_cache-1` to reflect your container
+name.
 
 ### Development
 
