@@ -3,12 +3,9 @@ import os
 
 from flask import Flask
 
-import flask_app.sp_cache.routes as sp_cache_routes
-import flask_app.resolver.routes as resolver_routes
-
 
 # .....................................................................................
-def create_app(test_config=None):
+def create_app(blueprint, test_config=None):
     """Create a Flask application.
 
     Args:
@@ -37,16 +34,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/')
-    def syftorium_root():
-        """Root endpoint for all services under syftorium umbrella.
-
-        Returns:
-            str: A string welcoming the user to the syftorium
-        """
-        return 'Welcome to the Syftorium!'
-
-    app.register_blueprint(sp_cache_routes.bp)
-    app.register_blueprint(resolver_routes.bp)
+    app.register_blueprint(blueprint)
 
     return app
