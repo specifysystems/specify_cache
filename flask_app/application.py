@@ -9,6 +9,7 @@ def create_app(blueprint, test_config=None):
     """Create a Flask application.
 
     Args:
+        blueprint: Flask Blueprint to use for this app
         test_config (dict): Testing configuration parameters.
 
     Returns:

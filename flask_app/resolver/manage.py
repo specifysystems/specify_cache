@@ -1,3 +1,5 @@
+"""Entrypoint for Resolver Flask App."""
+
 from flask.cli import FlaskGroup
 
 from flask_app.resolver import app
