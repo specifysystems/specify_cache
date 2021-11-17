@@ -76,3 +76,11 @@ docker compose -f docker-compose.yml -f docker-compose.development.yml up
 lmsyft is now available at [http://localhost/](http://localhost:443).
 
 Flask has hot-reload enabled.
+
+#### Configuring Debugger
+
+Debugger configuration is IDE dependent. [Instructions for
+PyCharm](https://kartoza.com/en/blog/using-docker-compose-based-python-interpreter-in-pycharm/)
+
+`runner` container is running `debugpy` on port `5001` and `sp_cache` on
+port `5002`.

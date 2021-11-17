@@ -48,7 +48,8 @@ services:
     image: nginx:1.21.3-alpine
     restart: unless-stopped
     depends_on:
-      - flask
+      - resolver
+      - sp_cache
     networks:
       - nginx
     ports:
