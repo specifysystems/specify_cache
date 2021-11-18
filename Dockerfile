@@ -34,7 +34,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 ENV FLASK_ENV=development
-CMD venv/bin/python -m ${FLASK_MANAGE} run --host=0.0.0.0
 CMD venv/bin/python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} -m ${FLASK_MANAGE} run --host=0.0.0.0
 
 
